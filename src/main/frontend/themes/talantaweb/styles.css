@@ -1,0 +1,1959 @@
+@import url('https://fonts.googleapis.com/css2?family=Glomeroid&display=swap');
+.login-view {
+    background: url('/images/r.avif') no-repeat center center / cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 700px;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+
+}
+.form-container {
+    width: 400px;
+    height: 450px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    right: 100px; /* Slightly outside to enhance "floating" look */
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+/* LOG IN Title */
+.form-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    margin-left: 20px; /* Move 20px from left */
+}
+.sub-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+
+/* Input Labels */
+.input-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    margin-left: 20px; /* Move 20px from left */
+}
+
+/* Input Fields */
+.input-field {
+    width: 350px; /* Adjust width considering left and right margins */
+    height: 40px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-left: 20px; /* Move 20px from left */
+    margin-right: 20px; /* Move 20px from right */
+    background-color: white !important;
+}
+
+vaadin-text-field::part(input-field) {
+    background-color: white !important;
+}
+
+
+input:-webkit-autofill {
+    background-color: white !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+/* Remember Me Checkbox */
+.remember-me {
+    margin-left: 20px; /* Move 20px from left */
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Forgot Password & Login Button Container */
+.bottom-layout {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    color: #080D82;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    margin-left: 25px; /* Move 20px from left */
+}
+
+/* Login Button */
+.login-button {
+    width: 100px;
+    height: 40px;
+    background: #F94D00;
+    color: white;
+    font-size: 18px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-right: 20px; /* Move 20px from right */
+}
+/* Left section inside login container */
+.left-section {
+    top: 0; /* 30px from the left */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    left: 20px; /* 30px from the left */
+}
+
+/* "Don't have an account?" title */
+.signup-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+    width: 200px;
+    line-height: 26px;
+}
+
+/* Signup subtitle */
+.signup-subtitle {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+/* Sign Up button */
+.signup-button {
+    width: 100px;
+    height: 40px;
+    background-color: #F94D00;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+
+
+
+
+/* signup */
+
+.signup-view {
+    background: url('/images/r.avif') no-repeat center center / cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-container {
+    width: 700px;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between; /* Pushes items to opposite sides */
+    align-items: center; /* Centers vertically */
+    padding: 20px; /* Optional: Add some spacing */
+
+}
+.form-container1 {
+    width: 400px;
+    height: 640px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 100px; /* Slightly outside to enhance "floating" look */
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-50%);
+    display: flex;
+
+}
+
+/* LOG IN Title */
+.form-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2px;
+    margin-left: 20px; /* Move 20px from left */
+}
+.sub-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 2px;
+    margin-left: 20px;
+}
+
+
+/* Input Labels */
+.input-label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2px;
+    margin-left: 20px; /* Move 20px from left */
+}
+
+/* Input Fields */
+.input-field {
+    width: 350px; /* Adjust width considering left and right margins */
+    height: 35px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-left: 20px; /* Move 20px from left */
+    margin-right: 20px; /* Move 20px from right */
+    background-color: white !important;
+}
+
+vaadin-text-field::part(input-field) {
+    background-color: white !important;
+}
+
+
+input:-webkit-autofill {
+    background-color: white !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+/* Remember Me Checkbox */
+.remember-me {
+    margin-left: 20px; /* Move 20px from left */
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Forgot Password & Login Button Container */
+.bottom-layout {
+    width: 100%;
+    display: flex;
+
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    color: #080D82;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    margin-left: 25px; /* Move 20px from left */
+}
+
+/* Login Button */
+.signup1-button {
+    width: 350px;
+    height: 40px;
+    background: #F94D00;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 20px; /* Move 20px from right */
+    margin-right: 20px;
+}
+
+
+
+/* Left section inside login container */
+.right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: auto; /* Pushes it to the right */
+    margin-right: 20px; /* 30px from the left */
+}
+
+/* "Don't have an account?" title */
+.login1-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+    width: 200px;
+    line-height: 26px;
+}
+
+/* Signup subtitle */
+.login1-subtitle {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+/* Sign Up button */
+.login1-button {
+    width: 100px;
+    height: 40px;
+    background-color: #F94D00;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+.career-table .wrap-column {
+    white-space: normal; /* Allow text to wrap */
+    word-break: break-word; /* Ensure long words wrap */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* home */
+
+.home-view {
+    background-image: url('images/r.avif'); /* Set the image as the background */
+    background-size: cover; /* Ensure the image covers the entire screen */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation Bar */
+.nav-bar {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    background-color: transparent;
+}
+
+.logo {
+    width: 150px;
+    height: 100px;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+
+/* Navigation Menu */
+.nav-menu {
+    display: flex;
+    gap: 40px;
+    margin-right: 50px;
+}
+
+.nav-link {
+    font-family: 'Glaromaid', sans-serif;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #FFD700;
+
+
+}
+
+/* Right section containing menu, login & signup buttons */
+.right-section4 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 20px;
+}
+
+/* Buttons */
+.nav-button {
+    background-color:#F94D00;
+    color: white;
+    font-size: 16px;
+    width:90px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+}
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-top: 80px;
+}
+
+/* Left Side Text Content */
+.text-section {
+    width: 80%;
+    margin-top: 100px;
+}
+
+.sub-header {
+    font-size: 45px;
+    color: white;
+    font-weight: bold;
+    line-height: 10px;
+}
+
+.p {
+    font-size: 16px;
+    color: white;
+    width: 50%;
+    line-height: 1.5;
+}
+
+.get-button {
+    background-color:#F94D00;
+    color: white;
+    font-size: 26px;
+    width: 250px;
+    height: 60px;
+    cursor: pointer;
+    font-weight: bold;
+    top: 40px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Right Side Image */
+.l-image {
+    width: 500px;
+    height: 450px;
+    border-radius: 20px;
+    margin-right: 40px;
+}
+/* Footer Styles */
+.footer-nav {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    bottom: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.footer-text {
+    color: white;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 20px;
+}
+
+.footer-menu {
+    display: flex;
+    gap: 30px;
+    margin-right: 20px;
+}
+
+.footer-link {
+    font-family: 'Glaromaid', sans-serif;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-link:hover {
+    color: #FFD700;
+}
+
+
+
+
+
+
+
+
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+
+/* Main Layout */
+.main-layout {
+    display: flex;
+    padding: 20px;
+    gap: 40px;
+}
+.profile-heading{
+    color: #F94D00;
+    font-size: 22px;
+}
+
+/* Left Section */
+.left-section {
+    width: 250px;
+    margin-left: 40px;  /* Moves it 40px from the left */
+    margin-top: 50px;
+}
+
+.left-section h2 {
+    color: black;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.left-section h3 {
+    color: black;
+    font-size: 25px;
+    line-height: 30px;
+    font-weight: normal;
+}
+
+.left-section h2,
+.left-section h3 {
+    margin: 0; /* Completely removes extra space */
+    padding: 0; /* Ensures no extra spacing */
+    line-height: 20px; /* Adjusts spacing between lines */
+}
+
+
+/* Chart Section */
+.chart-container {
+    width: 500px;
+    max-width: 500px;
+    margin: auto;
+}
+
+/* Insights Box */
+.insights-box {
+    background-color: #F94D00;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; /* Increase width */
+}
+
+.insights-box h3 {
+    margin: 2px 0;
+    text-align: left;
+    font-size: 18px;
+    color: white;
+}
+
+.insights-box p {
+    margin: 5px 0;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Yellow Button */
+.yellow-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.yellow-button:hover {
+    background-color: #ffcc00;
+}
+
+/* Right Section - Boxes */
+.box {
+    width: 330px;
+    height: 138px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+/* View Button */
+.view-button {
+    background-color:  #F94D00;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-button6 {
+    background-color:  #F94D00;
+    color:white;
+    border: none;
+    font-weight: normal;
+    font-size: 16px;
+
+}
+.ellipsis-dots {
+    font-size: 24px;
+    cursor: pointer;
+    color: #F94D00;
+}
+
+
+.logo1 {
+    width: 150px;
+    height: 100px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.logo1:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+
+
+
+
+
+
+
+
+
+/* Navbar new test */
+.navbar1 {
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Left Section */
+.left-section {
+    width: 250px;
+}
+
+.left-section1 h2, .left-section1 h3 {
+    margin: 0;
+    color: blue;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.left-section1 h3 {
+    color: blue;
+    font-size: 20px;
+}
+
+/* Insights Box */
+.insights-box1 {
+    background-color: #080D82;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px; /* Increase width */
+}
+
+.insights-box1 h3 {
+    margin: 2px 0;
+    text-align: left;
+    font-size: 18px;
+    color: white;
+}
+
+.insights-box1 p {
+    margin: 5px 0;
+    text-align: left;
+    font-size: 14px;
+}
+
+/* Your Latest Personality Profile */
+.profile-heading {
+    font-size: 33px;
+    text-align: center;
+    margin-top: 20px;
+    color: black;
+}
+
+.profile-text {
+    font-size: 16px;
+    text-align: center;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+/* Yellow Button */
+.yellow-button1 {
+    background-color: yellow;
+    color: black;
+    border: none;
+    padding: 0px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    margin: 4px auto 4px 20px; /* Add margin to separate it nicely */
+    width: 300px; /* Increase width */
+}
+
+.yellow-button1:hover {
+    background-color: #ffcc00;
+}
+
+/* View Button */
+.view-button1 {
+    background-color:  #080D82;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-button1:hover {
+    background-color: #0056b3;
+}
+
+/* Logo */
+.logo2 {
+    width: 150px;
+    height: 100px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.logo2:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+
+
+
+
+
+
+/* Navbar preview */
+.navbar1 {
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Logo */
+.logo2 {
+    width: 150px;
+    height: 100px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.logo2:hover {
+    transform: scale(1.1);
+}
+
+/* Title Text */
+.title-text {
+    color: blue;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 150px;
+    margin-top: 100px;
+}
+
+/* Description Text */
+.description-text {
+    font-size: 16px;
+    color: black;
+    line-height: 1.5;
+    max-width: 500px;
+    margin-left: 150px;
+
+}
+
+/* OK Button */
+.ok-button {
+    background-color:  #080D82;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 70%;
+
+}
+
+.ok-button:hover {
+    background-color: darkblue;
+}
+/* Logo */
+.leftimg {
+    width: 513px;
+    height: 400px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.part-a-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.content-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.button-layout {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+
+/* Top Image */
+.top-image3 {
+    margin-bottom: 20px;
+    margin-top: 20px
+}
+
+/* Title Styling */
+.title-text3 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.title-text5{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Description Styling */
+.description-text3 {
+    margin-top: 5px;
+    font-size: 18px;
+    text-align: center;
+    max-width: 600px;
+}
+
+/* OK Button */
+.ok-button3 {
+    background-color:  #F94D00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.content-layout3 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+}
+
+
+
+
+
+/* Text Styling */
+.h22 {
+    font-size: 30px; /* Adjusted for better readability */
+    margin-bottom: 5px; /* Reduce bottom margin */
+    font-weight: normal;
+}
+
+/* Reduce size of the back arrow */
+vaadin-icon {
+    font-size: 18px !important; /* Reduce icon size */
+    width: 18px !important;
+    height: 18px !important;
+}
+/* Reduce back arrow size */
+.back-arrow {
+    font-size: 18px !important;
+    cursor: pointer;
+}
+.sub-text {
+    font-size: 16px;
+    color: #555;
+}
+
+
+
+
+/* table*/
+/* Center everything */
+.sub-text8, .career-table {
+    text-align: center;
+}
+
+/* H2 Styling */
+.h23 {
+    font-size: 30px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #FE691E;
+    text-align: left !important;
+}
+.h24 {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: normal;
+    color: black;
+    margin-left: 80px;
+}
+.h25 {
+    font-size: 30px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #FE691E;
+    margin-left: 50px;
+}
+
+.h26 {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight:bold;
+    color: #802800;
+    margin-left: 80px;
+}
+
+
+
+
+.sub-textt {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Paragraph Styling */
+.sub-text8 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Back Arrow Styling */
+.back-arrow {
+    font-size: 18px !important;
+    cursor: pointer;
+}
+
+/* Table Styling */
+.career-table1 {
+    width: 1300px;
+    height: 300px;
+    border-collapse: collapse;
+    margin-top: 5px;
+    background-color: white;
+    text-align:left;
+}
+
+/* Table Header Styling */
+.career-table1 thead th {
+    background-color: orange;
+    color: white;
+    text-align: left !important;
+    padding: 10px;
+}
+/* Table Header Styling */
+.career-table1::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+/* Table Row Styling */
+.career-table1 tbody td {
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Table Hover Effect */
+.career-table1 tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+/*institution*/
+
+/* Table Styling */
+.career-table {
+    width: 1090px;
+    height: 280px;
+    border-collapse: collapse;
+    margin-top: 0px;
+    background-color: white;
+    text-align: left !important;
+}
+
+/* Table Header Styling */
+.career-table thead th {
+    background-color: orange;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Table Header Styling */
+.career-table::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+/* Table Row Styling */
+.career-table tbody td {
+    background-color: white;
+    text-align: left !important;
+    padding: 10px;
+}
+
+/* Table Hover Effect */
+.career-table tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+
+/* institution*/
+
+
+
+
+
+
+
+
+
+/* Button Styling */
+.view-button9 {
+    background-color: #F94D00;
+    color:white;
+    border: none;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Button Styling */
+.view-button16 {
+    background-color: #F94D00;
+    color:white;
+    border: none;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* table */
+
+
+
+
+
+
+
+
+
+
+/* Button Styling */
+.view-button4 {
+    background-color: #F94D00;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 50px;
+    font-size: 13px;
+}
+
+
+
+
+
+/* Main container */
+.main-container5 {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    height: 450px; /* Reduced height */
+}
+
+/* Title */
+.title10 {
+    margin-left: 10px;
+    font-size: 30px; /* Slightly reduced font size */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Sub-container (payment option) */
+.payment-option {
+    width: 530px;
+    height: 50px;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+    justify-content: space-between; /* Ensures label and image are on the left */
+}
+
+/* Payment option text (Reduced font size, moved closer to the image) */
+.payment-text {
+    font-size: 16px;
+    margin-left: 10px; /* Moves text closer to the image */
+    width: 100%;
+}
+
+/* Proceed button */
+.proceed-button {
+    background-color:  #F94D00;
+    color: white;
+    width: 100%;
+    height: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+
+
+/* selected payment method*/
+.main-container6 {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.title6 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.payment-amount {
+    font-size: 18px;
+    color: #333;
+    margin-left: 10px;
+    margin-bottom: 15px;
+}
+
+.phone-input-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.country-code-dropdown {
+    width: 100px;
+    margin-top: 20px;
+}
+
+.phone-number-field {
+    flex-grow: 1;
+    margin-top: 20px;
+    border: none;
+    border-bottom: 2px solid #F94D00;
+    padding: 8px;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+}
+
+.pay-button {
+    background-color:  #F94D00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 40px;
+    width: 100%;
+    height: 45px;
+}
+
+
+
+
+
+
+/* Subtitle and Sublabel */
+
+.main-container7 {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    height: 500px; /* Reduced height */
+}
+
+.title1 {
+    text-align: left;
+    font-size: 30px; /* Slightly reduced font size */
+    margin-bottom: 10px;
+    font-weight: bold;
+
+}
+.sub-title1 {
+    text-align: left; /* Align text to the left */
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: black;
+    width: 100%;
+}
+
+.sub-label1 {
+    text-align: left; /* Align text to the left */
+    font-size: 16px;
+    margin-bottom: 5px;
+    width: 100%;
+    margin-left: 5px;
+}
+
+/* Sub-container */
+.sub-container {
+    width: 450px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 2px;
+    justify-content: center;
+    background-color: #fff;
+    border-bottom: 1px solid black;
+}
+
+/* Sub-container text */
+.sub-container-text {
+    font-size: 16px;
+    text-align: left;
+
+}
+
+/* Buttons */
+.cancel-button, .pay-now-button {
+    height: 40px;
+    font-size: 16px;
+    margin-top: 1px;
+    cursor: pointer;
+}
+
+.cancel-button {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    color:black;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.pay-now-button {
+    background-color:  #F94D00;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+/* occupation css code*/
+/* Centered Container */
+.centered-container {
+    width: 700px;
+    height: 530px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Title Label */
+.title-label {
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 1px;
+    width: 90%;
+    line-height: 26px;
+    font-family: 'Glomeroid', sans-serif;
+}
+
+/* Subtitle Label */
+.subtitle-label {
+    font-size: 16px;
+    color: black;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+/* TextField */
+.occupation-textfield {
+    margin-left: 10px;
+    margin-top: 10px;
+    border: 2px solid #F94D00;
+}
+
+/* Search Icon Inside TextField */
+.search-icon {
+    color: gray;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+/* Occupation List */
+.occupation-list {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+/* Occupation Label */
+.occupation-label {
+    font-size: 14px;
+    padding: 0px 0px; /* Reduce padding */
+    margin: 1px 0; /* Reduce margin */
+    cursor: pointer;
+}
+
+.occupation-label:hover {
+    color: blue;
+    text-decoration: none;
+}
+
+.button-layout8 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end; /* Moves buttons to the right */
+    gap: 20px; /* Adds space between buttons */
+    width: 100%; /* Ensures the buttons align to the right edge */
+    margin-right: 15px;
+}
+
+
+/* Skip Button */
+.skip-button8 {
+    background-color: white; /* Grey background */
+    color: black;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Next Button */
+.next-button8 {
+    background-color: #F94D00; /* Orange background */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+}
+
+/* Hover Effects */
+.skip-button8:hover {
+    background-color: darkgray;
+}
+
+.next-button8:hover {
+    background-color: darkorange;
+}
+
+/* Back Button Layout */
+.back-button-layout {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Back Icon */
+.back-icon {
+    color: #F94D00;
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+/* Back Text */
+.back-text {
+    font-size: 18px;
+    color: #F94D00;
+    font-weight: bold;
+
+}
+
+/* styles.css */
+.custom-dropdown::part(label) {
+    color: black !important;
+    font-size: 14px;
+}
+
+
+.cancel-button9 {
+    background-color: white; /* Grey background */
+    color: black;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Next Button */
+.ok-button9 {
+    background-color: #F94D00; /* Orange background */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+}
+
+
+/* relevance*/
+/* Table Styling */
+.career-table2 {
+    width: 1300px;
+    height: 300px;
+    border-collapse: collapse;
+    margin-top: 5px;
+    background-color: white;
+    text-align:left;
+}
+
+/* Table Header Styling */
+.career-table2 thead th {
+    background-color: orange;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+/* Table Header Styling */
+.career-table2::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Table Row Styling */
+.career-table2 tbody td {
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Table Hover Effect */
+.career-table2 tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+
+
+/*rel*/
+
+vaadin-notification-card::part(overlay) {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+
+/*verify*/
+.title-label6{
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 150px;
+}
+.code-input {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+/*partA*/
+.centered-container11 {
+    width: 900px;
+    min-height: 900px; /* Ensures it expands */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    display: flex;
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: visible; /* Ensures content is not hidden */
+}
+.title-label7 {
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 80%;
+    line-height: 26px;
+    font-family: 'Glomeroid', sans-serif;
+}
+
+vaadin-radio-group::part(label) {
+    margin-left: -50px !important;
+}
+
+
+/*kuccps*/
+
+/* Table Styling */
+.career-table8 {
+    width: 1090px;
+    height: auto;
+    border-collapse: collapse;
+    margin-top: 2px;
+    background-color: white;
+    text-align: left !important;
+}
+
+/* Table Header Styling */
+.career-table8 thead th {
+    color: white;
+    text-align: left;
+    padding: 2px !important;
+    height: 10px !important; /* Adjust height as needed */
+}
+/* Table Header Styling */
+.career-table8::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    height: 10px !important; /* Adjust height as needed */
+    font-size: 16px;
+    text-align: left !important;
+    padding: 0 0 !important;          /* Reduced Padding (Height Control) */
+    line-height: 1 !important;            /* Minimize Line Height */
+}
+.career-table8::part(header-row) {
+    height: 10px !important; /* Adjust height as needed */
+}
+/* Ensure content fits tightly within cells */
+.career-table8 .vaadin-grid-cell {
+    padding: 2px !important;
+}
+
+/* Table Row Styling */
+.career-table8 tbody td {
+    background-color: white;
+    text-align: left !important;
+    padding: 10px;
+}
+
+/* Table Hover Effect */
+.career-table8 tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+/* Optional: Ensure grid's header row also has orange background */
+.first-table::part(header-cell) {
+    background-color:#F94D00 !important;
+    color:white;
+    font-size: 14px;
+}
+
+
+
+
+
+
+/* Apply orange to the entire grid and rows */
+.second-table {
+    background-color: #802800 !important; /* Background of the grid */
+    color: white !important; /* Text color */
+}
+
+/* Target the rows and cells inside the grid */
+.second-table::part(row) {
+    background-color: #802800 !important; /* Entire row background */
+    color: black !important; /* Row text color */
+}
+
+/* Ensure even alternating rows stay orange */
+.second-table::part(even-row) {
+    background-color: #802800 !important;
+}
+
+/* Ensure hover effect remains orange */
+.second-table::part(selected-row) {
+    background-color: #802800 !important;
+}
+
+/* Optional: Ensure grid's header row also has orange background */
+.second-table::part(header-cell) {
+    background-color:#802800 !important;
+}
+/* Apply vertical lines to all grid cells */
+.second-table .vaadin-grid-cell-content {
+    border-right: 1px solid black; /* Vertical line */
+}
+
+/* Remove the last column's right border */
+.second-table .vaadin-grid-cell-content:last-child {
+    border-right: none;
+}
+
+
+
+
+
+
+
+/* Table Styling */
+.career-table11 {
+    width: 1000px;
+    height: 348px;
+    border-collapse: collapse;
+    margin-top: 0px;
+    background-color: white;
+    text-align: left !important;
+}
+
+/* Table Header Styling */
+.career-table11 thead th {
+    background-color: orange;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+/* Table Header Styling */
+.career-table11::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+/* Table Row Styling */
+.career-table11 tbody td {
+    background-color: white;
+    text-align: left !important;
+    padding: 5px;
+}
+
+/* Table Hover Effect */
+.career-table11 tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+/* Add to your stylesheet */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+[part="content"] {
+    height: 100%;
+    overflow: auto;
+}
+
+.first-table, .second-table, .third-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    word-wrap: break-word !important;
+}
+
+
+
+.third-table::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+
+/* table 13*/
+
+
+/* Table Styling */
+.career-table13 {
+    width: 1090px;
+    height: 280px;
+    border-collapse: collapse;
+    margin-top: 0px;
+    background-color: white;
+    text-align: left !important;
+}
+
+/* Table Header Styling */
+.career-table13 thead th {
+    background-color: orange;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Table Header Styling */
+.career-table13::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+/* Table Row Styling */
+.career-table13 tbody td {
+    background-color: white;
+    text-align: left !important;
+    padding: 10px;
+}
+
+/* Table Hover Effect */
+.career-table13 tbody tr:hover {
+    background-color: gray;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+.third-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    --lumo-font-size-s: 12px;
+}
+
+.third-table vaadin-grid-cell-content {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.5 !important;
+    padding: var(--lumo-space-xs) !important;
+    max-width: 100% !important;
+}
+
+/* Force cell content to respect width */
+.third-table [part~="cell"] {
+    min-width: 0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
