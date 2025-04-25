@@ -30,6 +30,8 @@ import java.util.*;
 public class PaymentsAdminView extends VerticalLayout {
 
     public PaymentsAdminView() {
+        setSizeFull(); // Ensure this fills the viewport
+        getStyle().set("overflow", "auto");
         HorizontalLayout layout = new HorizontalLayout();
         VerticalLayout sidebar = createSidebar(); // Reusing your existing sidebar
         VerticalLayout mainContent = createMainContent();
@@ -37,6 +39,7 @@ public class PaymentsAdminView extends VerticalLayout {
         layout.setSizeFull();
         sidebar.setWidth("240px");
         sidebar.getStyle().set("background", "#F4F4F4");
+        sidebar.getStyle().set("height", "850px");
         layout.add(sidebar, mainContent);
         add(layout);
     }
@@ -53,17 +56,17 @@ public class PaymentsAdminView extends VerticalLayout {
         logo.addClassName("logo");
 
         sidebar.add(
-            logo,
-            createNavItem("Dashboard", VaadinIcon.DASHBOARD, "Admindashboard"),
-            createNavItem("Users", VaadinIcon.USER, "users"),
-            createNavItem("Personality Tests", VaadinIcon.CLIPBOARD_TEXT, "personality-tests"),
-            createNavItem("Courses & Careers", VaadinIcon.BOOK, "courses-careers"),
-            createNavItem("Institutions", VaadinIcon.ACADEMY_CAP, "institutions"),
-            createNavItem("Payments", VaadinIcon.CREDIT_CARD, "payments"),
-            createNavItem("Reports", VaadinIcon.CHART, "reports"),
-            createNavItem("Content", VaadinIcon.FILE_TEXT, "content"),
-            createNavItem("Notifications", VaadinIcon.BELL, "notifications"),
-            createNavItem("Settings", VaadinIcon.COG, "settings")
+                logo,
+                createNavItem("Dashboard", VaadinIcon.DASHBOARD, "Admindashboard"),
+                createNavItem("Users", VaadinIcon.USER, "users"),
+                createNavItem("Personality Tests", VaadinIcon.CLIPBOARD_TEXT, "personality-tests"),
+                createNavItem("Courses & Careers", VaadinIcon.BOOK, "courses-careers"),
+                createNavItem("Institutions", VaadinIcon.ACADEMY_CAP, "institutions"),
+                createNavItem("Payments", VaadinIcon.CREDIT_CARD, "payments"),
+                createNavItem("Reports", VaadinIcon.CHART, "reports"),
+                createNavItem("Content", VaadinIcon.FILE_TEXT, "content"),
+                createNavItem("Notifications", VaadinIcon.BELL, "notifications"),
+                createNavItem("Settings", VaadinIcon.COG, "settings")
         );
 
         return sidebar;
@@ -81,10 +84,10 @@ public class PaymentsAdminView extends VerticalLayout {
         nav.setAlignItems(FlexComponent.Alignment.CENTER);
 
         nav.getStyle()
-           .set("padding", "10px")
-           .set("cursor", "pointer")
-           .set("border-radius", "5px")
-           .set("transition", "background-color 0.3s ease");
+                .set("padding", "10px")
+                .set("cursor", "pointer")
+                .set("border-radius", "5px")
+                .set("transition", "background-color 0.3s ease");
 
         nav.addClickListener(e -> UI.getCurrent().navigate(route));
 
@@ -120,10 +123,10 @@ public class PaymentsAdminView extends VerticalLayout {
         statsLayout.setSpacing(true);
 
         statsLayout.add(
-            createStatCard("$24,875", "Total Revenue", VaadinIcon.MONEY),
-            createStatCard("1,248", "Successful Payments", VaadinIcon.CHECK),
-            createStatCard("42", "Failed Payments", VaadinIcon.CLOSE),
-            createStatCard("89%", "Payment Success Rate", VaadinIcon.TRENDING_UP)
+                createStatCard("$24,875", "Total Revenue", VaadinIcon.MONEY),
+                createStatCard("1,248", "Successful Payments", VaadinIcon.CHECK),
+                createStatCard("42", "Failed Payments", VaadinIcon.CLOSE),
+                createStatCard("89%", "Payment Success Rate", VaadinIcon.TRENDING_UP)
         );
         main.add(statsLayout);
 
@@ -131,31 +134,31 @@ public class PaymentsAdminView extends VerticalLayout {
         Chart revenueChart = new Chart();
         Configuration conf = revenueChart.getConfiguration();
         conf.setTitle("Monthly Revenue");
-        
+
         XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
-        
+
         YAxis yAxis = new YAxis();
         yAxis.setTitle("Amount ($)");
         conf.addyAxis(yAxis);
-        
+
         PlotOptionsColumn columnOptions = new PlotOptionsColumn();
         columnOptions.setColor(new SolidColor("#E65100"));
         conf.setPlotOptions(columnOptions);
-        
-        ListSeries series = new ListSeries("Revenue", 
-            1200, 1900, 1500, 2100, 2400, 2800, 
-            3000, 2700, 2500, 3100, 2900, 3500);
+
+        ListSeries series = new ListSeries("Revenue",
+                1200, 1900, 1500, 2100, 2400, 2800,
+                3000, 2700, 2500, 3100, 2900, 3500);
         conf.addSeries(series);
-        
+
         revenueChart.getStyle()
-            .set("background-color", "white")
-            .set("border-radius", "10px")
-            .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
-            .set("padding", "20px");
-        
+                .set("background-color", "white")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
+                .set("padding", "20px");
+
         main.add(revenueChart);
 
         // Main content tabs
@@ -165,7 +168,7 @@ public class PaymentsAdminView extends VerticalLayout {
         Button transactionsTab = new Button("Transactions");
         Button subscriptionsTab = new Button("Subscriptions");
         Button refundsTab = new Button("Refunds");
-        
+
         tabs.add(transactionsTab, subscriptionsTab, refundsTab);
         main.add(tabs);
 
@@ -173,29 +176,29 @@ public class PaymentsAdminView extends VerticalLayout {
         VerticalLayout transactionsSection = new VerticalLayout();
         transactionsSection.setPadding(false);
         transactionsSection.setSpacing(false);
-        
+
         // Transactions grid
         Grid<Transaction> transactionsGrid = createTransactionsGrid();
         transactionsSection.add(transactionsGrid);
-        
+
         // Subscriptions section (hidden by default)
         VerticalLayout subscriptionsSection = new VerticalLayout();
         subscriptionsSection.setPadding(false);
         subscriptionsSection.setSpacing(false);
         subscriptionsSection.setVisible(false);
-        
+
         Grid<Subscription> subscriptionsGrid = createSubscriptionsGrid();
         subscriptionsSection.add(subscriptionsGrid);
-        
+
         // Refunds section (hidden by default)
         VerticalLayout refundsSection = new VerticalLayout();
         refundsSection.setPadding(false);
         refundsSection.setSpacing(false);
         refundsSection.setVisible(false);
-        
+
         Grid<Refund> refundsGrid = createRefundsGrid();
         refundsSection.add(refundsGrid);
-        
+
         // Tab switching logic
         transactionsTab.addClickListener(e -> {
             transactionsSection.setVisible(true);
@@ -205,7 +208,7 @@ public class PaymentsAdminView extends VerticalLayout {
             subscriptionsTab.getStyle().remove("background-color").set("color", "inherit");
             refundsTab.getStyle().remove("background-color").set("color", "inherit");
         });
-        
+
         subscriptionsTab.addClickListener(e -> {
             transactionsSection.setVisible(false);
             subscriptionsSection.setVisible(true);
@@ -214,7 +217,7 @@ public class PaymentsAdminView extends VerticalLayout {
             transactionsTab.getStyle().remove("background-color").set("color", "inherit");
             refundsTab.getStyle().remove("background-color").set("color", "inherit");
         });
-        
+
         refundsTab.addClickListener(e -> {
             transactionsSection.setVisible(false);
             subscriptionsSection.setVisible(false);
@@ -223,12 +226,12 @@ public class PaymentsAdminView extends VerticalLayout {
             transactionsTab.getStyle().remove("background-color").set("color", "inherit");
             subscriptionsTab.getStyle().remove("background-color").set("color", "inherit");
         });
-        
+
         // Set default tab
         transactionsTab.getStyle().set("background-color", "#E65100").set("color", "white");
-        
+
         main.add(transactionsSection, subscriptionsSection, refundsSection);
-        
+
         return main;
     }
 
@@ -250,33 +253,34 @@ public class PaymentsAdminView extends VerticalLayout {
 
         card.add(cardIcon, valueLabel, description);
         card.getStyle()
-           .set("background-color", "white")
-           .set("padding", "20px")
-           .set("border-radius", "10px")
-           .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
-           .set("width", "100%")
-           .set("align-items", "center");
+                .set("background-color", "white")
+                .set("padding", "20px")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
+                .set("width", "100%")
+                .set("align-items", "center");
 
         return card;
     }
 
     private Grid<Transaction> createTransactionsGrid() {
         Grid<Transaction> grid = new Grid<>();
-        
+        grid.setHeight("350px");
+
         // Sample data
         List<Transaction> transactions = Arrays.asList(
-            new Transaction("TXN001", "USR001", "John Doe", "Premium Subscription", 
-                          "2023-05-15 10:30", 49.99, "Credit Card", "Completed"),
-            new Transaction("TXN002", "USR002", "Jane Smith", "Career Match", 
-                          "2023-05-14 14:15", 9.99, "M-Pesa", "Completed"),
-            new Transaction("TXN003", "USR003", "Alice Johnson", "Institution Search", 
-                          "2023-05-14 09:45", 4.99, "Credit Card", "Failed"),
-            new Transaction("TXN004", "USR004", "Bob Brown", "Premium Subscription", 
-                          "2023-05-13 16:20", 49.99, "PayPal", "Completed"),
-            new Transaction("TXN005", "USR005", "Charlie Davis", "Course Recommendation", 
-                          "2023-05-12 11:10", 7.99, "M-Pesa", "Completed")
+                new Transaction("TXN001", "USR001", "John Doe", "Premium Subscription",
+                        "2023-05-15 10:30", 49.99, "Credit Card", "Completed"),
+                new Transaction("TXN002", "USR002", "Jane Smith", "Career Match",
+                        "2023-05-14 14:15", 9.99, "M-Pesa", "Completed"),
+                new Transaction("TXN003", "USR003", "Alice Johnson", "Institution Search",
+                        "2023-05-14 09:45", 4.99, "Credit Card", "Failed"),
+                new Transaction("TXN004", "USR004", "Bob Brown", "Premium Subscription",
+                        "2023-05-13 16:20", 49.99, "PayPal", "Completed"),
+                new Transaction("TXN005", "USR005", "Charlie Davis", "Course Recommendation",
+                        "2023-05-12 11:10", 7.99, "M-Pesa", "Completed")
         );
-        
+
         grid.setItems(transactions);
         grid.addColumn(Transaction::getId).setHeader("ID").setWidth("100px");
         grid.addColumn(Transaction::getUserId).setHeader("User ID");
@@ -285,7 +289,7 @@ public class PaymentsAdminView extends VerticalLayout {
         grid.addColumn(Transaction::getTimestamp).setHeader("Date/Time");
         grid.addColumn(t -> "$" + t.getAmount()).setHeader("Amount");
         grid.addColumn(Transaction::getPaymentMethod).setHeader("Method");
-        
+
         grid.addColumn(transaction -> {
             Span status = new Span(transaction.getStatus());
             if ("Completed".equals(transaction.getStatus())) {
@@ -297,45 +301,46 @@ public class PaymentsAdminView extends VerticalLayout {
             }
             return status;
         }).setHeader("Status");
-        
+
         grid.addComponentColumn(transaction -> {
             HorizontalLayout actions = new HorizontalLayout();
             Button viewBtn = new Button(VaadinIcon.EYE.create());
             Button refundBtn = new Button(VaadinIcon.MONEY_EXCHANGE.create());
-            
+
             viewBtn.addClickListener(e -> showTransactionDetails(transaction));
             refundBtn.addClickListener(e -> showRefundDialog(transaction));
             refundBtn.setEnabled("Completed".equals(transaction.getStatus()));
-            
+
             actions.add(viewBtn, refundBtn);
             return actions;
         }).setHeader("Actions");
-        
+
         grid.getStyle()
-           .set("background-color", "white")
-           .set("border-radius", "10px")
-           .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
-        
+                .set("background-color", "white")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
+
         return grid;
     }
 
     private Grid<Subscription> createSubscriptionsGrid() {
         Grid<Subscription> grid = new Grid<>();
-        
+        grid.setHeight("350px");
+
         // Sample data
         List<Subscription> subscriptions = Arrays.asList(
-            new Subscription("SUB001", "USR001", "John Doe", "Premium", 
-                           "2023-01-15", "2024-01-15", "Active", 49.99, "Monthly"),
-            new Subscription("SUB002", "USR002", "Jane Smith", "Basic", 
-                           "2023-03-10", "2023-06-10", "Active", 19.99, "Quarterly"),
-            new Subscription("SUB003", "USR004", "Bob Brown", "Premium", 
-                           "2022-11-20", "2023-11-20", "Active", 49.99, "Monthly"),
-            new Subscription("SUB004", "USR005", "Charlie Davis", "Basic", 
-                           "2023-04-05", "2023-05-05", "Expired", 19.99, "Monthly"),
-            new Subscription("SUB005", "USR003", "Alice Johnson", "Premium", 
-                           "2023-02-28", "2023-05-28", "Cancelled", 49.99, "Quarterly")
+                new Subscription("SUB001", "USR001", "John Doe", "Premium",
+                        "2023-01-15", "2024-01-15", "Active", 49.99, "Monthly"),
+                new Subscription("SUB002", "USR002", "Jane Smith", "Basic",
+                        "2023-03-10", "2023-06-10", "Active", 19.99, "Quarterly"),
+                new Subscription("SUB003", "USR004", "Bob Brown", "Premium",
+                        "2022-11-20", "2023-11-20", "Active", 49.99, "Monthly"),
+                new Subscription("SUB004", "USR005", "Charlie Davis", "Basic",
+                        "2023-04-05", "2023-05-05", "Expired", 19.99, "Monthly"),
+                new Subscription("SUB005", "USR003", "Alice Johnson", "Premium",
+                        "2023-02-28", "2023-05-28", "Cancelled", 49.99, "Quarterly")
         );
-        
+
         grid.setItems(subscriptions);
         grid.addColumn(Subscription::getId).setHeader("ID").setWidth("100px");
         grid.addColumn(Subscription::getUserId).setHeader("User ID");
@@ -343,7 +348,7 @@ public class PaymentsAdminView extends VerticalLayout {
         grid.addColumn(Subscription::getPlan).setHeader("Plan");
         grid.addColumn(Subscription::getStartDate).setHeader("Start Date");
         grid.addColumn(Subscription::getEndDate).setHeader("End Date");
-        
+
         grid.addColumn(subscription -> {
             Span status = new Span(subscription.getStatus());
             if ("Active".equals(subscription.getStatus())) {
@@ -355,48 +360,49 @@ public class PaymentsAdminView extends VerticalLayout {
             }
             return status;
         }).setHeader("Status");
-        
+
         grid.addColumn(s -> "$" + s.getAmount()).setHeader("Amount");
         grid.addColumn(Subscription::getBillingCycle).setHeader("Billing");
-        
+
         grid.addComponentColumn(subscription -> {
             HorizontalLayout actions = new HorizontalLayout();
             Button viewBtn = new Button(VaadinIcon.EYE.create());
             Button editBtn = new Button(VaadinIcon.EDIT.create());
             Button cancelBtn = new Button(VaadinIcon.CLOSE.create());
-            
+
             viewBtn.addClickListener(e -> showSubscriptionDetails(subscription));
             editBtn.addClickListener(e -> showEditSubscriptionDialog(subscription));
             cancelBtn.addClickListener(e -> cancelSubscription(subscription));
             cancelBtn.setEnabled("Active".equals(subscription.getStatus()));
-            
+
             actions.add(viewBtn, editBtn, cancelBtn);
             return actions;
         }).setHeader("Actions");
-        
+
         grid.getStyle()
-           .set("background-color", "white")
-           .set("border-radius", "10px")
-           .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
-        
+                .set("background-color", "white")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
+
         return grid;
     }
 
     private Grid<Refund> createRefundsGrid() {
         Grid<Refund> grid = new Grid<>();
-        
+        grid.setHeight("350px");
+
         // Sample data
         List<Refund> refunds = Arrays.asList(
-            new Refund("REF001", "TXN004", "USR004", "Bob Brown", 49.99, 
-                      "2023-05-14", "Completed", "User requested refund"),
-            new Refund("REF002", "TXN007", "USR006", "David Wilson", 9.99, 
-                      "2023-05-10", "Pending", "Duplicate payment"),
-            new Refund("REF003", "TXN009", "USR008", "Eve Adams", 4.99, 
-                      "2023-05-05", "Rejected", "Service already used"),
-            new Refund("REF004", "TXN011", "USR010", "Frank Miller", 19.99, 
-                      "2023-04-28", "Completed", "Subscription cancellation")
+                new Refund("REF001", "TXN004", "USR004", "Bob Brown", 49.99,
+                        "2023-05-14", "Completed", "User requested refund"),
+                new Refund("REF002", "TXN007", "USR006", "David Wilson", 9.99,
+                        "2023-05-10", "Pending", "Duplicate payment"),
+                new Refund("REF003", "TXN009", "USR008", "Eve Adams", 4.99,
+                        "2023-05-05", "Rejected", "Service already used"),
+                new Refund("REF004", "TXN011", "USR010", "Frank Miller", 19.99,
+                        "2023-04-28", "Completed", "Subscription cancellation")
         );
-        
+
         grid.setItems(refunds);
         grid.addColumn(Refund::getId).setHeader("ID").setWidth("100px");
         grid.addColumn(Refund::getTransactionId).setHeader("Transaction ID");
@@ -404,7 +410,7 @@ public class PaymentsAdminView extends VerticalLayout {
         grid.addColumn(Refund::getUserName).setHeader("User");
         grid.addColumn(r -> "$" + r.getAmount()).setHeader("Amount");
         grid.addColumn(Refund::getDateProcessed).setHeader("Date");
-        
+
         grid.addColumn(refund -> {
             Span status = new Span(refund.getStatus());
             if ("Completed".equals(refund.getStatus())) {
@@ -416,27 +422,27 @@ public class PaymentsAdminView extends VerticalLayout {
             }
             return status;
         }).setHeader("Status");
-        
+
         grid.addColumn(Refund::getReason).setHeader("Reason");
-        
+
         grid.addComponentColumn(refund -> {
             HorizontalLayout actions = new HorizontalLayout();
             Button viewBtn = new Button(VaadinIcon.EYE.create());
             Button processBtn = new Button(VaadinIcon.CHECK.create());
-            
+
             viewBtn.addClickListener(e -> showRefundDetails(refund));
             processBtn.addClickListener(e -> processRefund(refund));
             processBtn.setEnabled("Pending".equals(refund.getStatus()));
-            
+
             actions.add(viewBtn, processBtn);
             return actions;
         }).setHeader("Actions");
-        
+
         grid.getStyle()
-           .set("background-color", "white")
-           .set("border-radius", "10px")
-           .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
-        
+                .set("background-color", "white")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)");
+
         return grid;
     }
 
@@ -445,13 +451,13 @@ public class PaymentsAdminView extends VerticalLayout {
         dialog.setCloseOnEsc(true);
         dialog.setCloseOnOutsideClick(true);
         dialog.setWidth("700px");
-        
+
         H2 header = new H2("Transaction #" + transaction.getId());
-        
+
         VerticalLayout details = new VerticalLayout();
         details.setSpacing(false);
         details.setPadding(false);
-        
+
         details.add(new H3("Transaction Information"));
         details.add(createDetailRow("User:", transaction.getUserName() + " (" + transaction.getUserId() + ")"));
         details.add(createDetailRow("Description:", transaction.getDescription()));
@@ -459,15 +465,15 @@ public class PaymentsAdminView extends VerticalLayout {
         details.add(createDetailRow("Amount:", "$" + transaction.getAmount()));
         details.add(createDetailRow("Payment Method:", transaction.getPaymentMethod()));
         details.add(createDetailRow("Status:", transaction.getStatus()));
-        
+
         if ("Failed".equals(transaction.getStatus())) {
             details.add(new H3("Failure Reason"));
             details.add(new Paragraph("Payment gateway timeout (Code: PG-504)"));
         }
-        
+
         Button closeBtn = new Button("Close", VaadinIcon.CLOSE.create());
         closeBtn.addClickListener(e -> dialog.close());
-        
+
         dialog.add(header, details, closeBtn);
         dialog.open();
     }
@@ -477,32 +483,32 @@ public class PaymentsAdminView extends VerticalLayout {
         dialog.setCloseOnEsc(true);
         dialog.setCloseOnOutsideClick(true);
         dialog.setWidth("500px");
-        
+
         H2 header = new H2("Process Refund for Transaction #" + transaction.getId());
-        
+
         FormLayout form = new FormLayout();
         TextField amountField = new TextField("Amount to Refund");
         amountField.setValue("$" + transaction.getAmount());
         amountField.setReadOnly(true);
-        
+
         TextArea reasonField = new TextArea("Reason for Refund");
         reasonField.setHeight("100px");
-        
+
         form.add(amountField, reasonField);
-        
+
         HorizontalLayout buttons = new HorizontalLayout();
         Button processBtn = new Button("Process Refund", VaadinIcon.CHECK.create());
         Button cancelBtn = new Button("Cancel", VaadinIcon.CLOSE.create());
         buttons.add(processBtn, cancelBtn);
-        
+
         processBtn.addClickListener(e -> {
             // In a real app, you would process the refund here
             Notification.show("Refund processed successfully");
             dialog.close();
         });
-        
+
         cancelBtn.addClickListener(e -> dialog.close());
-        
+
         dialog.add(header, form, buttons);
         dialog.open();
     }
@@ -512,13 +518,13 @@ public class PaymentsAdminView extends VerticalLayout {
         dialog.setCloseOnEsc(true);
         dialog.setCloseOnOutsideClick(true);
         dialog.setWidth("700px");
-        
+
         H2 header = new H2("Subscription #" + subscription.getId());
-        
+
         VerticalLayout details = new VerticalLayout();
         details.setSpacing(false);
         details.setPadding(false);
-        
+
         details.add(new H3("Subscription Information"));
         details.add(createDetailRow("User:", subscription.getUserName() + " (" + subscription.getUserId() + ")"));
         details.add(createDetailRow("Plan:", subscription.getPlan()));
@@ -527,7 +533,7 @@ public class PaymentsAdminView extends VerticalLayout {
         details.add(createDetailRow("Status:", subscription.getStatus()));
         details.add(createDetailRow("Amount:", "$" + subscription.getAmount()));
         details.add(createDetailRow("Billing Cycle:", subscription.getBillingCycle()));
-        
+
         details.add(new H3("Payment History"));
         // In a real app, you would show actual payment history
         Grid<Transaction> paymentHistory = new Grid<>();
@@ -536,12 +542,12 @@ public class PaymentsAdminView extends VerticalLayout {
         paymentHistory.addColumn(t -> "$" + t.getAmount()).setHeader("Amount");
         paymentHistory.addColumn(Transaction::getStatus).setHeader("Status");
         paymentHistory.setHeight("200px");
-        
+
         details.add(paymentHistory);
-        
+
         Button closeBtn = new Button("Close", VaadinIcon.CLOSE.create());
         closeBtn.addClickListener(e -> dialog.close());
-        
+
         dialog.add(header, details, closeBtn);
         dialog.open();
     }
@@ -551,56 +557,56 @@ public class PaymentsAdminView extends VerticalLayout {
         dialog.setCloseOnEsc(true);
         dialog.setCloseOnOutsideClick(true);
         dialog.setWidth("500px");
-        
+
         H2 header = new H2("Edit Subscription #" + subscription.getId());
-        
+
         FormLayout form = new FormLayout();
         TextField idField = new TextField("Subscription ID");
         idField.setValue(subscription.getId());
         idField.setReadOnly(true);
-        
+
         TextField userField = new TextField("User");
         userField.setValue(subscription.getUserName() + " (" + subscription.getUserId() + ")");
         userField.setReadOnly(true);
-        
+
         ComboBox<String> planField = new ComboBox<>("Plan");
         planField.setItems("Basic", "Premium", "Enterprise");
         planField.setValue(subscription.getPlan());
-        
+
         TextField startDateField = new TextField("Start Date");
         startDateField.setValue(subscription.getStartDate());
         startDateField.setReadOnly(true);
-        
+
         TextField endDateField = new TextField("End Date");
         endDateField.setValue(subscription.getEndDate());
-        
+
         ComboBox<String> statusField = new ComboBox<>("Status");
         statusField.setItems("Active", "Cancelled", "Expired", "Paused");
         statusField.setValue(subscription.getStatus());
-        
+
         NumberField amountField = new NumberField("Amount");
         amountField.setValue(subscription.getAmount());
-        
+
         ComboBox<String> billingField = new ComboBox<>("Billing Cycle");
         billingField.setItems("Monthly", "Quarterly", "Annual");
         billingField.setValue(subscription.getBillingCycle());
-        
-        form.add(idField, userField, planField, startDateField, endDateField, 
+
+        form.add(idField, userField, planField, startDateField, endDateField,
                 statusField, amountField, billingField);
-        
+
         HorizontalLayout buttons = new HorizontalLayout();
         Button saveBtn = new Button("Save Changes", VaadinIcon.CHECK.create());
         Button cancelBtn = new Button("Cancel", VaadinIcon.CLOSE.create());
         buttons.add(saveBtn, cancelBtn);
-        
+
         saveBtn.addClickListener(e -> {
             // In a real app, you would save the changes here
             Notification.show("Subscription updated successfully");
             dialog.close();
         });
-        
+
         cancelBtn.addClickListener(e -> dialog.close());
-        
+
         dialog.add(header, form, buttons);
         dialog.open();
     }
@@ -610,24 +616,24 @@ public class PaymentsAdminView extends VerticalLayout {
         confirmDialog.setCloseOnEsc(true);
         confirmDialog.setCloseOnOutsideClick(true);
         confirmDialog.setWidth("400px");
-        
+
         H3 header = new H3("Confirm Subscription Cancellation");
         Paragraph message = new Paragraph("Are you sure you want to cancel this subscription?");
-        
+
         HorizontalLayout buttons = new HorizontalLayout();
         Button confirmBtn = new Button("Confirm", VaadinIcon.CHECK.create());
         Button cancelBtn = new Button("Cancel", VaadinIcon.CLOSE.create());
         buttons.add(confirmBtn, cancelBtn);
-        
+
         confirmBtn.addClickListener(e -> {
             // In a real app, you would cancel the subscription here
             subscription.setStatus("Cancelled");
             Notification.show("Subscription cancelled successfully");
             confirmDialog.close();
         });
-        
+
         cancelBtn.addClickListener(e -> confirmDialog.close());
-        
+
         confirmDialog.add(header, message, buttons);
         confirmDialog.open();
     }
@@ -637,13 +643,13 @@ public class PaymentsAdminView extends VerticalLayout {
         dialog.setCloseOnEsc(true);
         dialog.setCloseOnOutsideClick(true);
         dialog.setWidth("700px");
-        
+
         H2 header = new H2("Refund #" + refund.getId());
-        
+
         VerticalLayout details = new VerticalLayout();
         details.setSpacing(false);
         details.setPadding(false);
-        
+
         details.add(new H3("Refund Information"));
         details.add(createDetailRow("Transaction ID:", refund.getTransactionId()));
         details.add(createDetailRow("User:", refund.getUserName() + " (" + refund.getUserId() + ")"));
@@ -651,30 +657,30 @@ public class PaymentsAdminView extends VerticalLayout {
         details.add(createDetailRow("Date Processed:", refund.getDateProcessed()));
         details.add(createDetailRow("Status:", refund.getStatus()));
         details.add(createDetailRow("Reason:", refund.getReason()));
-        
+
         if ("Pending".equals(refund.getStatus())) {
             details.add(new H3("Process Refund"));
             Button approveBtn = new Button("Approve Refund", VaadinIcon.CHECK.create());
             Button rejectBtn = new Button("Reject Refund", VaadinIcon.CLOSE.create());
-            
+
             approveBtn.addClickListener(e -> {
                 refund.setStatus("Completed");
                 Notification.show("Refund approved and processed");
                 dialog.close();
             });
-            
+
             rejectBtn.addClickListener(e -> {
                 refund.setStatus("Rejected");
                 Notification.show("Refund request rejected");
                 dialog.close();
             });
-            
+
             details.add(new HorizontalLayout(approveBtn, rejectBtn));
         }
-        
+
         Button closeBtn = new Button("Close", VaadinIcon.CLOSE.create());
         closeBtn.addClickListener(e -> dialog.close());
-        
+
         dialog.add(header, details, closeBtn);
         dialog.open();
     }
@@ -689,19 +695,20 @@ public class PaymentsAdminView extends VerticalLayout {
         HorizontalLayout row = new HorizontalLayout();
         row.setSpacing(true);
         row.setAlignItems(Alignment.BASELINE);
-        
+
         Paragraph labelPara = new Paragraph(label);
         labelPara.getStyle().set("font-weight", "bold").set("margin", "0");
-        
+
         Paragraph valuePara = new Paragraph(value);
         valuePara.getStyle().set("margin", "0");
-        
+
         row.add(labelPara, valuePara);
         return row;
     }
 
     // Dummy data classes
     private static class Transaction {
+
         private String id;
         private String userId;
         private String userName;
@@ -711,8 +718,8 @@ public class PaymentsAdminView extends VerticalLayout {
         private String paymentMethod;
         private String status;
 
-        public Transaction(String id, String userId, String userName, String description, 
-                          String timestamp, double amount, String paymentMethod, String status) {
+        public Transaction(String id, String userId, String userName, String description,
+                String timestamp, double amount, String paymentMethod, String status) {
             this.id = id;
             this.userId = userId;
             this.userName = userName;
@@ -724,17 +731,41 @@ public class PaymentsAdminView extends VerticalLayout {
         }
 
         // Getters
-        public String getId() { return id; }
-        public String getUserId() { return userId; }
-        public String getUserName() { return userName; }
-        public String getDescription() { return description; }
-        public String getTimestamp() { return timestamp; }
-        public double getAmount() { return amount; }
-        public String getPaymentMethod() { return paymentMethod; }
-        public String getStatus() { return status; }
+        public String getId() {
+            return id;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+
+        public String getPaymentMethod() {
+            return paymentMethod;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 
     private static class Subscription {
+
         private String id;
         private String userId;
         private String userName;
@@ -745,9 +776,9 @@ public class PaymentsAdminView extends VerticalLayout {
         private double amount;
         private String billingCycle;
 
-        public Subscription(String id, String userId, String userName, String plan, 
-                          String startDate, String endDate, String status, 
-                          double amount, String billingCycle) {
+        public Subscription(String id, String userId, String userName, String plan,
+                String startDate, String endDate, String status,
+                double amount, String billingCycle) {
             this.id = id;
             this.userId = userId;
             this.userName = userName;
@@ -760,22 +791,54 @@ public class PaymentsAdminView extends VerticalLayout {
         }
 
         // Getters
-        public String getId() { return id; }
-        public String getUserId() { return userId; }
-        public String getUserName() { return userName; }
-        public String getPlan() { return plan; }
-        public String getStartDate() { return startDate; }
-        public String getEndDate() { return endDate; }
-        public String getStatus() { return status; }
-        public double getAmount() { return amount; }
-        public String getBillingCycle() { return billingCycle; }
-        
+        public String getId() {
+            return id;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getPlan() {
+            return plan;
+        }
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+
+        public String getBillingCycle() {
+            return billingCycle;
+        }
+
         // Setters
-        public void setStatus(String status) { this.status = status; }
-        public void setEndDate(String endDate) { this.endDate = endDate; }
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
+        }
     }
 
     private static class Refund {
+
         private String id;
         private String transactionId;
         private String userId;
@@ -785,8 +848,8 @@ public class PaymentsAdminView extends VerticalLayout {
         private String status;
         private String reason;
 
-        public Refund(String id, String transactionId, String userId, String userName, 
-                     double amount, String dateProcessed, String status, String reason) {
+        public Refund(String id, String transactionId, String userId, String userName,
+                double amount, String dateProcessed, String status, String reason) {
             this.id = id;
             this.transactionId = transactionId;
             this.userId = userId;
@@ -798,16 +861,41 @@ public class PaymentsAdminView extends VerticalLayout {
         }
 
         // Getters
-        public String getId() { return id; }
-        public String getTransactionId() { return transactionId; }
-        public String getUserId() { return userId; }
-        public String getUserName() { return userName; }
-        public double getAmount() { return amount; }
-        public String getDateProcessed() { return dateProcessed; }
-        public String getStatus() { return status; }
-        public String getReason() { return reason; }
-        
+        public String getId() {
+            return id;
+        }
+
+        public String getTransactionId() {
+            return transactionId;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+
+        public String getDateProcessed() {
+            return dateProcessed;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getReason() {
+            return reason;
+        }
+
         // Setters
-        public void setStatus(String status) { this.status = status; }
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
 }

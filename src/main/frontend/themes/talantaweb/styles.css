@@ -1909,6 +1909,21 @@ html, body {
 
 
 
+.force-icon-size {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.third-table::part(header-cell) {
+    background-color: #F94D00 !important;
+    color: white !important;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left !important;
+}
+
+
+
 
 
 

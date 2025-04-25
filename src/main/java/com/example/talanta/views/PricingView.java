@@ -1,130 +1,3 @@
-//package com.example.talanta.views;
-//
-//import com.vaadin.flow.component.UI;
-//import com.vaadin.flow.component.button.Button;
-//import com.vaadin.flow.component.dialog.Dialog;
-//import com.vaadin.flow.component.grid.Grid;
-//import com.vaadin.flow.component.html.H2;
-//import com.vaadin.flow.component.html.Image;
-//import com.vaadin.flow.component.html.Paragraph;
-//import com.vaadin.flow.component.html.Span;
-//import com.vaadin.flow.component.icon.Icon;
-//import com.vaadin.flow.component.icon.VaadinIcon;
-//import com.vaadin.flow.component.orderedlayout.FlexComponent;
-//import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-//import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-//import com.vaadin.flow.component.textfield.TextField;
-//import com.vaadin.flow.router.Route;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Route("pricing")
-//public class PricingView extends VerticalLayout {
-//
-//    private Grid<PricingItem> pricingGrid = new Grid<>(PricingItem.class);
-//    private List<PricingItem> pricingItems = new ArrayList<>();
-//
-//    public PricingView() {
-//        HorizontalLayout layout = new HorizontalLayout();
-//        VerticalLayout sidebar = new AdminDashboardView().createSidebar();
-//        VerticalLayout mainContent = createPricingContent();
-//
-//        layout.setSizeFull();
-//        sidebar.setWidth("240px");
-//        sidebar.getStyle().set("background", "#F4F4F4");
-//
-//        layout.add(sidebar, mainContent);
-//        add(layout);
-//    }
-//
-//    private VerticalLayout createPricingContent() {
-//        VerticalLayout content = new VerticalLayout();
-//        content.setPadding(true);
-//        content.setSpacing(true);
-//        content.setWidthFull();
-//        content.getStyle().set("background-color", "#FFFFFF");
-//
-//        H2 heading = new H2("Pricing Control Panel");
-//        heading.getStyle().set("color", "#E65100");
-//
-//        TextField search = new TextField("Search Pricing Items");
-//        search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
-//        search.setClearButtonVisible(true);
-//
-//        Button addButton = new Button("Add New Pricing", new Icon(VaadinIcon.PLUS));
-//        addButton.getStyle().set("background-color", "#E65100").set("color", "white");
-//        addButton.addClickListener(e -> openAddDialog());
-//
-//        HorizontalLayout topBar = new HorizontalLayout(search, addButton);
-//        topBar.setWidthFull();
-//        topBar.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
-//
-//        pricingGrid.removeAllColumns();
-//        pricingGrid.addColumn(PricingItem::getItemName).setHeader("Item Name");
-//        pricingGrid.addColumn(PricingItem::getPrice).setHeader("Price (Ksh)");
-//        pricingGrid.addColumn(PricingItem::getAccessDuration).setHeader("Access Duration (days)");
-//
-//        pricingGrid.addComponentColumn(item -> {
-//            Button edit = new Button("Edit", new Icon(VaadinIcon.EDIT));
-//            edit.getStyle().set("color", "#E65100");
-//            return edit;
-//        });
-//
-//        pricingGrid.addComponentColumn(item -> {
-//            Button delete = new Button("Delete", new Icon(VaadinIcon.TRASH));
-//            delete.getStyle().set("color", "#E65100");
-//            return delete;
-//        });
-//
-//        loadSampleData();
-//        pricingGrid.setItems(pricingItems);
-//
-//        content.add(heading, topBar, pricingGrid);
-//        return content;
-//    }
-//
-//    private void openAddDialog() {
-//        Dialog dialog = new Dialog();
-//        dialog.setWidth("400px");
-//
-//        VerticalLayout form = new VerticalLayout();
-//        TextField itemName = new TextField("Item Name");
-//        TextField price = new TextField("Price (Ksh)");
-//        TextField accessDuration = new TextField("Access Duration (days)");
-//
-//        Button save = new Button("Save", e -> dialog.close());
-//        save.getStyle().set("background-color", "#E65100").set("color", "white");
-//
-//        form.add(itemName, price, accessDuration, save);
-//        dialog.add(form);
-//        dialog.open();
-//    }
-//
-//    private void loadSampleData() {
-//        pricingItems.add(new PricingItem("Career Match Test", 300, 30));
-//        pricingItems.add(new PricingItem("Premium Course", 1200, 90));
-//        pricingItems.add(new PricingItem("Institution Listing", 500, 60));
-//    }
-//
-//    public static class PricingItem {
-//        private String itemName;
-//        private double price;
-//        private int accessDuration;
-//
-//        public PricingItem(String itemName, double price, int accessDuration) {
-//            this.itemName = itemName;
-//            this.price = price;
-//            this.accessDuration = accessDuration;
-//        }
-//
-//        public String getItemName() { return itemName; }
-//        public double getPrice() { return price; }
-//        public int getAccessDuration() { return accessDuration; }
-//    }
-//}
-
-
 package com.example.talanta.views;
 
 import com.vaadin.flow.component.Text;
@@ -163,18 +36,17 @@ public class PricingView extends VerticalLayout {
     private ComboBox<String> durationFilter = new ComboBox<>("Duration");
 
     public PricingView() {
-        setSizeFull();
-        setPadding(false);
-        setSpacing(false);
-
+        setSizeFull(); // Ensure this fills the viewport
+        getStyle().set("overflow", "auto");
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSizeFull();
-        
+
         // Reuse admin sidebar
         VerticalLayout sidebar = new AdminDashboardView().createSidebar();
         sidebar.setWidth("240px");
         sidebar.getStyle()
                 .set("background", "#F4F4F4")
+                .set("height", "880px")
                 .set("border-right", "1px solid #E0E0E0");
 
         VerticalLayout mainContent = createMainContent();
@@ -249,6 +121,7 @@ public class PricingView extends VerticalLayout {
         pricingGrid.setSizeFull();
         pricingGrid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         pricingGrid.setSelectionMode(Grid.SelectionMode.NONE);
+        pricingGrid.setHeight("350px");
 
         // Columns configuration
         pricingGrid.addColumn(new ComponentRenderer<>(item -> {
@@ -258,7 +131,7 @@ public class PricingView extends VerticalLayout {
         })).setHeader("Status").setAutoWidth(true);
 
         pricingGrid.addColumn(PricingItem::getName).setHeader("Plan Name").setAutoWidth(true);
-        
+
         pricingGrid.addColumn(new ComponentRenderer<>(item -> {
             Span price = new Span(String.format("Ksh %,.2f", item.getPrice()));
             if (item.getDiscount() > 0) {
@@ -275,34 +148,34 @@ public class PricingView extends VerticalLayout {
         })).setHeader("Price").setAutoWidth(true);
 
         pricingGrid.addColumn(PricingItem::getDuration).setHeader("Duration").setAutoWidth(true);
-        
+
         pricingGrid.addColumn(new ComponentRenderer<>(item -> {
             return new Span(item.getDescription());
         })).setHeader("Description").setAutoWidth(true);
 
         pricingGrid.addColumn(new ComponentRenderer<>(item -> {
             HorizontalLayout actions = new HorizontalLayout();
-            
+
             Button preview = new Button(new Icon(VaadinIcon.EYE));
             preview.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             preview.addClickListener(e -> previewPlan(item));
             preview.getElement().setAttribute("title", "Preview");
-            
+
             Button edit = new Button(new Icon(VaadinIcon.EDIT));
             edit.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             edit.addClickListener(e -> openAddEditDialog(item));
             edit.getElement().setAttribute("title", "Edit");
-            
+
             Button toggle = new Button(new Icon(item.isActive() ? VaadinIcon.BAN : VaadinIcon.CHECK));
             toggle.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             toggle.addClickListener(e -> togglePlanStatus(item));
             toggle.getElement().setAttribute("title", item.isActive() ? "Deactivate" : "Activate");
-            
+
             Button delete = new Button(new Icon(VaadinIcon.TRASH));
             delete.addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ERROR);
             delete.addClickListener(e -> confirmDelete(item));
             delete.getElement().setAttribute("title", "Delete");
-            
+
             actions.add(preview, edit, toggle, delete);
             return actions;
         })).setHeader("Actions").setAutoWidth(true);
@@ -324,26 +197,26 @@ public class PricingView extends VerticalLayout {
         // Form fields
         TextField nameField = new TextField("Plan Name");
         nameField.setWidthFull();
-        
+
         TextArea descriptionField = new TextArea("Description");
         descriptionField.setWidthFull();
-        
+
         NumberField priceField = new NumberField("Price (Ksh)");
         priceField.setWidthFull();
-        
+
         NumberField originalPriceField = new NumberField("Original Price (Ksh)");
         originalPriceField.setWidthFull();
         originalPriceField.setHelperText("Leave empty if no discount");
-        
+
         NumberField discountField = new NumberField("Discount (%)");
         discountField.setWidthFull();
         discountField.setMax(100);
         discountField.setMin(0);
-        
+
         TextField durationField = new TextField("Access Duration");
         durationField.setWidthFull();
         durationField.setHelperText("e.g. '30 days', '6 months', '1 year'");
-        
+
         Checkbox activeCheckbox = new Checkbox("Active Plan");
         activeCheckbox.setValue(true);
 
@@ -375,10 +248,10 @@ public class PricingView extends VerticalLayout {
         HorizontalLayout buttons = new HorizontalLayout();
         buttons.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
         buttons.setSpacing(true);
-        
+
         Button cancel = new Button("Cancel", e -> dialog.close());
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        
+
         Button save = new Button(isNew ? "Add Plan" : "Save Changes");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.getStyle().set("background-color", "#E65100");
@@ -388,7 +261,7 @@ public class PricingView extends VerticalLayout {
         });
 
         buttons.add(cancel, save);
-        
+
         dialog.add(form, buttons);
         dialog.open();
     }
@@ -396,17 +269,17 @@ public class PricingView extends VerticalLayout {
     private void previewPlan(PricingItem item) {
         Dialog previewDialog = new Dialog();
         previewDialog.setWidth("500px");
-        
+
         VerticalLayout previewContent = new VerticalLayout();
         previewContent.setSpacing(true);
         previewContent.setPadding(false);
-        
+
         H3 name = new H3(item.getName());
         name.getStyle().set("color", "#E65100");
-        
+
         Span price = new Span(String.format("Ksh %,.2f", item.getPrice()));
         price.getStyle().set("font-size", "1.5rem").set("font-weight", "bold");
-        
+
         if (item.getDiscount() > 0) {
             Span original = new Span(String.format("Ksh %,.2f", item.getOriginalPrice()));
             original.getStyle().set("text-decoration", "line-through").set("color", "#999");
@@ -416,14 +289,14 @@ public class PricingView extends VerticalLayout {
         } else {
             previewContent.add(price);
         }
-        
+
         Div description = new Div(new Text(item.getDescription()));
         description.getStyle().set("margin", "1rem 0");
-        
+
         Div duration = new Div(new Icon(VaadinIcon.CLOCK));
         duration.add(new Span(" " + item.getDuration()));
         duration.getStyle().set("color", "#666");
-        
+
         previewContent.add(name, description, duration);
         previewDialog.add(previewContent);
         previewDialog.open();
@@ -439,7 +312,7 @@ public class PricingView extends VerticalLayout {
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setHeader("Delete Pricing Plan");
         dialog.setText("Are you sure you want to delete '" + item.getName() + "'? This action cannot be undone.");
-        
+
         dialog.setCancelable(true);
         dialog.setConfirmText("Delete");
         dialog.setConfirmButtonTheme("error primary");
@@ -448,7 +321,7 @@ public class PricingView extends VerticalLayout {
             pricingItems.remove(item);
             pricingGrid.setItems(pricingItems);
         });
-        
+
         dialog.open();
     }
 
@@ -458,20 +331,21 @@ public class PricingView extends VerticalLayout {
     }
 
     private void loadSampleData() {
-        pricingItems.add(new PricingItem("Basic Career Match", 300, 300, 0, "7 days", 
+        pricingItems.add(new PricingItem("Basic Career Match", 300, 300, 0, "7 days",
                 "Basic access to career matching tools and limited course information", true));
-        
-        pricingItems.add(new PricingItem("Premium Career Package", 1200, 1500, 20, "30 days", 
+
+        pricingItems.add(new PricingItem("Premium Career Package", 1200, 1500, 20, "30 days",
                 "Full access to all career tools, detailed course information, and expert advice", true));
-        
-        pricingItems.add(new PricingItem("Institution Sponsorship", 5000, 6000, 16.67, "90 days", 
+
+        pricingItems.add(new PricingItem("Institution Sponsorship", 5000, 6000, 16.67, "90 days",
                 "Special pricing for educational institutions with extended access", true));
-        
-        pricingItems.add(new PricingItem("Legacy Plan", 400, 400, 0, "15 days", 
+
+        pricingItems.add(new PricingItem("Legacy Plan", 400, 400, 0, "15 days",
                 "Older pricing plan being phased out", false));
     }
 
     public static class PricingItem {
+
         private String name;
         private double price;
         private double originalPrice;
@@ -480,8 +354,8 @@ public class PricingView extends VerticalLayout {
         private String description;
         private boolean active;
 
-        public PricingItem(String name, double price, double originalPrice, double discount, 
-                         String duration, String description, boolean active) {
+        public PricingItem(String name, double price, double originalPrice, double discount,
+                String duration, String description, boolean active) {
             this.name = name;
             this.price = price;
             this.originalPrice = originalPrice;
@@ -492,25 +366,60 @@ public class PricingView extends VerticalLayout {
         }
 
         // Getters and setters
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
-        
-        public double getPrice() { return price; }
-        public void setPrice(double price) { this.price = price; }
-        
-        public double getOriginalPrice() { return originalPrice; }
-        public void setOriginalPrice(double originalPrice) { this.originalPrice = originalPrice; }
-        
-        public double getDiscount() { return discount; }
-        public void setDiscount(double discount) { this.discount = discount; }
-        
-        public String getDuration() { return duration; }
-        public void setDuration(String duration) { this.duration = duration; }
-        
-        public String getDescription() { return description; }
-        public void setDescription(String description) { this.description = description; }
-        
-        public boolean isActive() { return active; }
-        public void setActive(boolean active) { this.active = active; }
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        public double getOriginalPrice() {
+            return originalPrice;
+        }
+
+        public void setOriginalPrice(double originalPrice) {
+            this.originalPrice = originalPrice;
+        }
+
+        public double getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(double discount) {
+            this.discount = discount;
+        }
+
+        public String getDuration() {
+            return duration;
+        }
+
+        public void setDuration(String duration) {
+            this.duration = duration;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
     }
 }

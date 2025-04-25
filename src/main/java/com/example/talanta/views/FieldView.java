@@ -29,8 +29,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import com.vaadin.flow.component.combobox.ComboBox;  // ← Add this
-import com.vaadin.flow.component.html.Label;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,24 +38,23 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@Route("courses-careers")
-public class CoursesAndCareersView extends VerticalLayout {
+@Route("fieldView")
+public class FieldView extends VerticalLayout {
 
-    private Grid<Course> coursesGrid = new Grid<>(Course.class, false);
-    private List<Course> courseList = new ArrayList<>();
-    private List<Course> allCourse = new ArrayList<>();
+    private Grid<Field> fieldGrid = new Grid<>(Field.class, false);
+    private List<Field> fieldList = new ArrayList<>();
+    private List<Field> allField = new ArrayList<>();
     private Button prevPageButton;
     private Button nextPageButton;
     private Span pageInfo;
     private int currentPage = 0;
     private final int PAGE_SIZE = 5;
-    private String institution;
-    private ComboBox<String> institutionDropdown;
-    private List<Course> courses = new ArrayList<>();
 
-    private Binder<Course> courseBinder = new Binder<>(Course.class);
+    private List<Field> courses = new ArrayList<>();
 
-    public CoursesAndCareersView() {
+    private Binder<Field> courseBinder = new Binder<>(Field.class);
+
+    public FieldView () {
         try {
             initializeView();
         } catch (Exception e) {
@@ -155,14 +153,14 @@ public class CoursesAndCareersView extends VerticalLayout {
         main.setSizeFull();
 
         // Header
-        H1 header = new H1("Courses");
+        H1 header = new H1("Fields Of Study");
         header.getStyle().set("color", "#E65100");
         header.getStyle().set("margin-top", "50px");
         header.getStyle().set("margin-left", "50px");
         main.add(header);
 
         // Add Course Button
-        Button addCourseButton = new Button("Add Course", new Icon(VaadinIcon.PLUS));
+        Button addCourseButton = new Button("Add Field", new Icon(VaadinIcon.PLUS));
         addCourseButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         addCourseButton.getStyle().set("background-color", "#E65100");
         addCourseButton.addClickListener(e -> showCourseForm(null));
@@ -191,23 +189,23 @@ public class CoursesAndCareersView extends VerticalLayout {
         section.setPadding(false);
         section.setSpacing(true);
         // Initialize Grid
-        coursesGrid = new Grid<>();
-        coursesGrid.setWidth("70%");
-        coursesGrid.getStyle()
+        fieldGrid = new Grid<>();
+        fieldGrid.setWidth("90%");
+        fieldGrid.getStyle()
                 .set("margin-left", "50px")
                 .set("margin-top", "20px");
 
-        coursesGrid.addClassName("third-table");
+        fieldGrid.addClassName("third-table");
 
         // Configure columns
-        coursesGrid.addColumn(Course::getId)
+        fieldGrid.addColumn(Field::getId)
                 .setHeader("#")
                 .setWidth("100px")
                 .setFlexGrow(0)
                 .setSortable(false);
-        coursesGrid.addColumn(new ComponentRenderer<>(course -> {
+        fieldGrid.addColumn(new ComponentRenderer<>(course -> {
             Div container = new Div();
-            container.setText(course.getProgramtitle() != null ? course.getProgramtitle() : "");
+            container.setText(course.getFieldname() != null ? course.getFieldname() : "");
             container.getStyle()
                     .set("font-size", "14px") // Reduced font size
                     .set("line-height", "1.5")
@@ -216,12 +214,35 @@ public class CoursesAndCareersView extends VerticalLayout {
                     .set("font-weight", "bold")
                     .set("width", "100%");
             return container;
-        })).setHeader("course Name")
+        })).setHeader("Field Name")
                 .setAutoWidth(true)
                 .setFlexGrow(1);
+        
+        fieldGrid.addColumn(new ComponentRenderer<>(field -> {
+            Div container = new Div();
+            container.setText(field.getFiledoverview() != null ? field.getFiledoverview() : "");
+            container.getStyle()
+                    .set("white-space", "normal")
+                    .set("overflow-wrap", "break-word") // Use overflow-wrap instead of word-break
+                    .set("font-size", "14px")
+                    .set("line-height", "1.5")
+                    .set("font-weight", "normal")
+                    .set("display", "block")
+                    .set("width", "100%")
+                    .set("color", "black")
+                    .set("max-width", "100%");  // Add max-width constraint
+            return container;
+        })).setHeader("Overview")
+                .setWidth("300px") // Set fixed width for the column
+                .setFlexGrow(2);
+        
+        
+        
+        
+        
 
         // Action column
-        coursesGrid.addComponentColumn(course -> {
+        fieldGrid.addComponentColumn(course -> {
             HorizontalLayout actions = new HorizontalLayout();
             actions.setSpacing(true);
 
@@ -250,55 +271,42 @@ public class CoursesAndCareersView extends VerticalLayout {
         paginationControls.getStyle().set("margin-top", "0");
         paginationControls.getStyle().set("margin-left", "50px");
 
-        section.add(coursesGrid, paginationControls);
+        section.add(fieldGrid, paginationControls);
         configurePagination();
 
         return section;
     }
 
-    private void showCourseForm(Course course) {
+    private void showCourseForm(Field field) {
         try {
             Dialog dialog = new Dialog();
             dialog.setCloseOnEsc(true);
             dialog.setCloseOnOutsideClick(true);
 
-            boolean isNew = course == null;
-            Course editedCourse = isNew ? new Course() : new Course(course);
+            boolean isNew = field == null;
+            Field editedCourse = isNew ? new Field() : new Field(field);
 
-            H2 dialogTitle = new H2(isNew ? "Add New Course" : "Edit Course");
+            H2 dialogTitle = new H2(isNew ? "Add New Field" : "Edit Field");
             dialogTitle.getStyle().set("color", "#E65100");
 
             // Form Fields
-            TextField nameField = new TextField("Course Name");
+            TextField nameField = new TextField("Field Name");
             nameField.setWidthFull();
-            nameField.getStyle().set("border", "1px solid grey");
             nameField.setRequired(true);
 
-            Select<String> categoryField = new Select<>();
-            categoryField.setLabel("Levels");
-            categoryField.setItems("Artisan", "Tertiary Certificate", "Diploma", "Higher Diploma", "Postgraduate diploma", "Bachelors", "Masters", "phD");
-            categoryField.setWidthFull();
-
-            Select<String> institutionSelect = new Select<>();
-            institutionSelect.setLabel("Institution");
-            // Get institutions from API
-            List<String> apiInstitutions = fetchInstitutionNames();
-            institutionSelect.setItems(apiInstitutions);
-            institutionSelect.setPlaceholder("Select Institution");
-            institutionSelect.addValueChangeListener(e -> {
-                this.institution = e.getValue();
-
-            });
+            TextField descriptionField = new TextField("Field Description");
+            descriptionField .setWidthFull();
+            descriptionField .setRequired(true);
 
             // Configure binder
             courseBinder.forField(nameField)
                     .asRequired("Course name is required")
-                    .bind(Course::getProgramtitle, Course::setProgramtitle);
+                    .bind(Field::getFieldname, Field::setFieldname);
             // Set initial values
             courseBinder.readBean(editedCourse);
 
             FormLayout form = new FormLayout();
-            form.add(nameField, categoryField, institutionSelect);
+            form.add(nameField, descriptionField );
 
             // Save Button
             Button saveButton = new Button("Save", e -> {
@@ -308,11 +316,11 @@ public class CoursesAndCareersView extends VerticalLayout {
                             courses.add(editedCourse);
                             showSuccess("Course added successfully");
                         } else {
-                            course.setProgramtitle(editedCourse.getProgramtitle());
+                            field.setFieldname(editedCourse.getFieldname());
 
                             showSuccess("Course updated successfully");
                         }
-                        coursesGrid.getDataProvider().refreshAll();
+                        fieldGrid.getDataProvider().refreshAll();
                         dialog.close();
                     }
                 } catch (Exception ex) {
@@ -340,16 +348,16 @@ public class CoursesAndCareersView extends VerticalLayout {
         }
     }
 
-    private void confirmDeleteCourse(Course course) {
+    private void confirmDeleteCourse(Field field) {
         try {
             ConfirmDialog dialog = new ConfirmDialog(
                     "Delete Course",
-                    "Are you sure you want to delete '" + course.getProgramtitle() + "'?",
+                    "Are you sure you want to delete '" + field.getFieldname() + "'?",
                     "Delete", e -> {
                         try {
-                            courses.remove(course);
-                            coursesGrid.getDataProvider().refreshAll();
-                            showSuccess("Course deleted successfully");
+                            courses.remove(field);
+                            fieldGrid.getDataProvider().refreshAll();
+                            showSuccess("Field deleted successfully");
                         } catch (Exception ex) {
                             showError("Failed to delete course: " + ex.getMessage());
                         }
@@ -390,7 +398,7 @@ public class CoursesAndCareersView extends VerticalLayout {
         nextPageButton.getStyle().set("background-color", " #F94D00");
         nextPageButton.setEnabled(false);
         nextPageButton.addClickListener(e -> {
-            if ((currentPage + 1) * PAGE_SIZE < courseList.size()) {
+            if ((currentPage + 1) * PAGE_SIZE < fieldList.size()) {
                 currentPage++;
                 updateGrid();
             }
@@ -399,20 +407,20 @@ public class CoursesAndCareersView extends VerticalLayout {
 
     private void updateGrid() {
         int fromIndex = currentPage * PAGE_SIZE;
-        int toIndex = Math.min(fromIndex + PAGE_SIZE, courseList.size());
+        int toIndex = Math.min(fromIndex + PAGE_SIZE, fieldList.size());
 
-        if (fromIndex >= courseList.size()) {
+        if (fromIndex >= fieldList.size()) {
             currentPage = 0;
             fromIndex = 0;
-            toIndex = Math.min(PAGE_SIZE, courseList.size());
+            toIndex = Math.min(PAGE_SIZE, fieldList.size());
         }
 
-        List<Course> pageItems = courseList.subList(fromIndex, toIndex);
-        coursesGrid.setItems(pageItems);
+        List<Field> pageItems = fieldList.subList(fromIndex, toIndex);
+        fieldGrid.setItems(pageItems);
         updatePageInfo();
 
         boolean atStart = currentPage == 0;
-        boolean atEnd = (currentPage + 1) * PAGE_SIZE >= courseList.size();
+        boolean atEnd = (currentPage + 1) * PAGE_SIZE >= fieldList.size();
 
         prevPageButton.setEnabled(!atStart);
         nextPageButton.setEnabled(!atEnd);
@@ -429,7 +437,7 @@ public class CoursesAndCareersView extends VerticalLayout {
     }
 
     private void updatePageInfo() {
-        int totalItems = courseList.size();
+        int totalItems = fieldList.size();
         int from = Math.min(currentPage * PAGE_SIZE + 1, totalItems);
         int to = Math.min((currentPage + 1) * PAGE_SIZE, totalItems);
         pageInfo.setText(from + " - " + to + " of " + totalItems);
@@ -437,10 +445,10 @@ public class CoursesAndCareersView extends VerticalLayout {
 
     private void fetchCoursedData() {
         UI ui = UI.getCurrent();
-        List<Course> newCourseList = new ArrayList<>();
+        List<Field> newFieldList = new ArrayList<>();
 
         try {
-            String apiUrl = ConfigUtil.BASE_URL + "/getAllPrograms";
+            String apiUrl = ConfigUtil.BASE_URL + "/getAllFields";
             System.out.println("Fetching All fields data from: " + apiUrl);
 
             HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
@@ -461,9 +469,9 @@ public class CoursesAndCareersView extends VerticalLayout {
 
                     JSONObject occupationObj = gradeScores.getJSONObject(i);
                     Long id = occupationObj.getLong("id");
-                    String programtitle = occupationObj.getString("programtitle");
-
-                    newCourseList.add(new Course(id, programtitle));
+                    String fieldname = occupationObj.getString("fieldname");
+                    String filedoverview = occupationObj.getString("filedoverview");
+                    newFieldList.add(new Field(id, fieldname,filedoverview));
 
                 }
             } else {
@@ -476,57 +484,36 @@ public class CoursesAndCareersView extends VerticalLayout {
         }
 
         ui.access(() -> {
-            allCourse = newCourseList;
-            courseList = new ArrayList<>(allCourse);
+            allField = newFieldList;
+            fieldList = new ArrayList<>(allField);
             updateGrid();
-            System.out.println("Grid updated with " + courseList.size() + " items.");
+            System.out.println("Grid updated with " + fieldList.size() + " items.");
         });
     }
 
-    private List<String> fetchInstitutionNames() {
-        List<String> institutionNames = new ArrayList<>();
-
-        try {
-            String institutionUrl = "http://localhost:8080/talantaAuth/getinstitutes";
-            HttpURLConnection connection = (HttpURLConnection) new URL(institutionUrl).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/json");
-
-            if (connection.getResponseCode() == 200) {
-                String response = IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
-                JSONArray institutions = new JSONObject(response).getJSONArray("data");
-
-                for (int i = 0; i < institutions.length(); i++) {
-                    String name = institutions.getJSONObject(i).getString("name");
-                    institutionNames.add(name);
-                }
-            }
-            connection.disconnect();
-        } catch (Exception e) {
-            System.err.println("Error fetching institutions: " + e.getMessage());
-            // Consider returning a default list here if needed
-        }
-
-        return institutionNames;
-    }
-
     // Model Classes
-    public static class Course {
+    public static class Field {
 
         private long id;
-        private String programtitle;
+        private String fieldname;
+        private String filedoverview;
 
-        public Course(long id, String programtitle) {
+        public Field(long id, String fieldname, String filedoverview) {
             this.id = id;
-            this.programtitle = programtitle;
+            this.fieldname = fieldname;
+            this.filedoverview = filedoverview;
         }
 
-        public Course() {
+       
+
+        public Field() {
         }
 
-        public Course(Course other) {
+        public Field(Field other) {
             this.id = other.id;
-            this.programtitle = other.programtitle;
+            this.id = id;
+            this.fieldname = fieldname;
+            this.filedoverview = filedoverview;
         }
 
         public long getId() {
@@ -537,13 +524,23 @@ public class CoursesAndCareersView extends VerticalLayout {
             this.id = id;
         }
 
-        public String getProgramtitle() {
-            return programtitle;
+        public String getFieldname() {
+            return fieldname;
         }
 
-        public void setProgramtitle(String programtitle) {
-            this.programtitle = programtitle;
+        public void setFieldname(String fieldname) {
+            this.fieldname = fieldname;
         }
+
+        public String getFiledoverview() {
+            return filedoverview;
+        }
+
+        public void setFiledoverview(String filedoverview) {
+            this.filedoverview = filedoverview;
+        }
+
+        
 
     }
 
