@@ -3,11 +3,9 @@ package com.example.talanta.views;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
-import com.vaadin.flow.component.charts.model.style.SolidColor;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.*;
@@ -21,11 +19,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@JsModule("https://cdn.jsdelivr.net/npm/chart.js")
 @Route("reports")
 public class ReportsView extends VerticalLayout {
 
@@ -195,7 +196,7 @@ public class ReportsView extends VerticalLayout {
         chartsRow2.setSpacing(true);
 
         chartsRow2.add(
-                createColumnChart("Users by Region", 
+                createBarChart("Users by Region", 
                         new String[]{"Nairobi", "Mombasa", "Kisumu", "Nakuru", "Eldoret"},
                         new Number[]{520, 210, 180, 150, 85}),
                 createUsersGrid()
@@ -251,7 +252,7 @@ public class ReportsView extends VerticalLayout {
                 createBarChart("Top Courses by Views", 
                         new String[]{"Computer Science", "Business", "Medicine", "Engineering", "Arts"},
                         new Number[]{1250, 980, 870, 760, 540}),
-                createColumnChart("Top Purchased Courses", 
+                createBarChart("Top Purchased Courses", 
                         new String[]{"Computer Science", "Business", "Medicine", "Engineering", "Arts"},
                         new Number[]{320, 280, 190, 150, 90})
         );
@@ -334,7 +335,7 @@ public class ReportsView extends VerticalLayout {
         chartsRow.setSpacing(true);
 
         chartsRow.add(
-                createColumnChart("Institutions with Most Courses", 
+                createBarChart("Institutions with Most Courses", 
                         new String[]{"UoN", "KU", "JKUAT", "MMUST", "Egerton"},
                         new Number[]{45, 38, 32, 25, 18}),
                 createLineChart("Enrollment Traffic", 
@@ -402,116 +403,91 @@ public class ReportsView extends VerticalLayout {
         return card;
     }
 
-    private Chart createPieChart(String title, String[] categories, Number[] values) {
-        Chart chart = new Chart(ChartType.PIE);
-        chart.getStyle()
-                .set("background", "white")
-                .set("border-radius", "4px")
-                .set("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
-                .set("min-height", "300px");
-
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle(title);
-
-        DataSeries series = new DataSeries();
-        for (int i = 0; i < categories.length; i++) {
-            series.add(new DataSeriesItem(categories[i], values[i]));
-        }
-        conf.addSeries(series);
-
-        return chart;
+    // Chart.js Implementation Methods
+    private VerticalLayout createPieChart(String title, String[] labels, Number[] data) {
+        return createChart(title, "pie", labels, data, 
+            "['rgba(230, 81, 0, 0.8)', 'rgba(255, 152, 0, 0.8)', " +
+            "'rgba(255, 193, 7, 0.8)', 'rgba(139, 195, 74, 0.8)', " +
+            "'rgba(67, 160, 71, 0.8)']");
     }
 
-    private Chart createBarChart(String title, String[] categories, Number[] values) {
-        Chart chart = new Chart(ChartType.BAR);
-        chart.getStyle()
-                .set("background", "white")
-                .set("border-radius", "4px")
-                .set("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
-                .set("min-height", "300px");
-
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle(title);
-
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories(categories);
-        conf.addxAxis(xAxis);
-
-        YAxis yAxis = new YAxis();
-        yAxis.setTitle("Count");
-        conf.addyAxis(yAxis);
-
-        PlotOptionsBar plotOptions = new PlotOptionsBar();
-        plotOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(plotOptions);
-
-        DataSeries series = new DataSeries();
-        series.setData(values);
-        conf.addSeries(series);
-
-        return chart;
+    private VerticalLayout createBarChart(String title, String[] labels, Number[] data) {
+        return createChart(title, "bar", labels, data, "'rgba(230, 81, 0, 0.8)'");
     }
 
-    private Chart createColumnChart(String title, String[] categories, Number[] values) {
-        Chart chart = new Chart(ChartType.COLUMN);
-        chart.getStyle()
-                .set("background", "white")
-                .set("border-radius", "4px")
-                .set("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
-                .set("min-height", "300px");
-
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle(title);
-
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories(categories);
-        conf.addxAxis(xAxis);
-
-        YAxis yAxis = new YAxis();
-        yAxis.setTitle("Count");
-        conf.addyAxis(yAxis);
-
-        PlotOptionsColumn plotOptions = new PlotOptionsColumn();
-        plotOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(plotOptions);
-
-        DataSeries series = new DataSeries();
-        series.setData(values);
-        conf.addSeries(series);
-
-        return chart;
+    private VerticalLayout createLineChart(String title, String[] labels, Number[] data) {
+        return createChart(title, "line", labels, data, "'rgba(230, 81, 0, 0.8)'");
     }
 
-    private Chart createLineChart(String title, String[] categories, Number[] values) {
-        Chart chart = new Chart(ChartType.LINE);
-        chart.getStyle()
-                .set("background", "white")
-                .set("border-radius", "4px")
-                .set("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
-                .set("min-height", "300px");
+   private VerticalLayout createChart(String title, String type, String[] labels, Number[] data, String colors) {
+    VerticalLayout container = new VerticalLayout();
+    container.getStyle()
+            .set("background", "white")
+            .set("border-radius", "4px")
+            .set("padding", "1rem")
+            .set("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
+            .set("flex", "1");
 
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle(title);
+    H3 chartTitle = new H3(title);
+    chartTitle.getStyle().set("margin", "0 0 1rem 0");
+    container.add(chartTitle);
 
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories(categories);
-        conf.addxAxis(xAxis);
+    String canvasId = "chart-" + System.currentTimeMillis();
+    Element canvas = new Element("canvas");
+    canvas.setAttribute("id", canvasId);
+    canvas.getStyle()
+            .set("width", "100%")
+            .set("height", "300px");
 
-        YAxis yAxis = new YAxis();
-        yAxis.setTitle("Amount (Ksh)");
-        conf.addyAxis(yAxis);
+    Div chartDiv = new Div();
+    chartDiv.getElement().appendChild(canvas);
+    chartDiv.setWidthFull();
 
-        PlotOptionsLine plotOptions = new PlotOptionsLine();
-        plotOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(plotOptions);
+    chartDiv.addAttachListener(event -> {
+        // Properly format labels with quotes
+        String jsLabels = Arrays.stream(labels)
+                .map(label -> "\"" + label + "\"")
+                .collect(Collectors.joining(", ", "[", "]"));
 
-        DataSeries series = new DataSeries();
-        series.setData(values);
-        conf.addSeries(series);
+        String jsData = Arrays.toString(data);
 
-        return chart;
-    }
+        String js = String.format(
+            "var ctx = document.getElementById('%s').getContext('2d');" +
+            "new Chart(ctx, {" +
+            "  type: '%s'," +
+            "  data: {" +
+            "    labels: %s," +  // Use properly formatted labels
+            "    datasets: [{" +
+            "      label: 'Data'," +
+            "      data: %s," +
+            "      backgroundColor: %s," +
+            "      borderColor: 'white'," +
+            "      borderWidth: 2" +
+            "    }]" +
+            "  }," +
+            "  options: {" +
+            "    responsive: true," +
+            "    maintainAspectRatio: false," +
+            "    plugins: {" +
+            "      legend: { position: 'right' }" +
+            "    }," +
+            "    scales: {" +
+            "      x: { grid: { display: false } }," +
+            "      y: { beginAtZero: true }" +
+            "    }" +
+            "  }" +
+            "});",
+            canvasId, type, jsLabels, jsData, colors
+        );
 
+        UI.getCurrent().getPage().executeJs(js);
+    });
+
+    container.add(chartDiv);
+    return container;
+}
+
+    // Data Grids
     private Grid<UserReport> createUsersGrid() {
         Grid<UserReport> grid = new Grid<>();
         grid.addColumn(UserReport::getRegion).setHeader("Region");

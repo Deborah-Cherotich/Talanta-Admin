@@ -6,6 +6,7 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.charts.model.style.SolidColor;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -23,11 +24,14 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.dom.Element;
 
 import java.util.*;
-
+@JsModule("https://cdn.jsdelivr.net/npm/chart.js")
 @Route("payments")
 public class PaymentsAdminView extends VerticalLayout {
+
+    private final Map<String, Object> chartInstances = new HashMap<>();
 
     public PaymentsAdminView() {
         setSizeFull(); // Ensure this fills the viewport
@@ -130,36 +134,7 @@ public class PaymentsAdminView extends VerticalLayout {
         );
         main.add(statsLayout);
 
-        // Revenue chart
-        Chart revenueChart = new Chart();
-        Configuration conf = revenueChart.getConfiguration();
-        conf.setTitle("Monthly Revenue");
-
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        conf.addxAxis(xAxis);
-
-        YAxis yAxis = new YAxis();
-        yAxis.setTitle("Amount ($)");
-        conf.addyAxis(yAxis);
-
-        PlotOptionsColumn columnOptions = new PlotOptionsColumn();
-        columnOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(columnOptions);
-
-        ListSeries series = new ListSeries("Revenue",
-                1200, 1900, 1500, 2100, 2400, 2800,
-                3000, 2700, 2500, 3100, 2900, 3500);
-        conf.addSeries(series);
-
-        revenueChart.getStyle()
-                .set("background-color", "white")
-                .set("border-radius", "10px")
-                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
-                .set("padding", "20px");
-
-        main.add(revenueChart);
+        main.add(createRevenueChart());
 
         // Main content tabs
         Div tabs = new Div();
@@ -233,6 +208,81 @@ public class PaymentsAdminView extends VerticalLayout {
         main.add(transactionsSection, subscriptionsSection, refundsSection);
 
         return main;
+    }
+
+    private VerticalLayout createRevenueChart() {
+        VerticalLayout container = new VerticalLayout();
+        container.getStyle()
+                .set("background-color", "white")
+                .set("border-radius", "10px")
+                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
+                .set("padding", "20px");
+
+        H3 chartTitle = new H3("Monthly Revenue");
+        container.add(chartTitle);
+
+        String canvasId = "revenueChart-" + UUID.randomUUID().toString();
+        Element canvas = new Element("canvas");
+        canvas.setAttribute("id", canvasId);
+        canvas.getStyle().set("height", "400px").set("width", "100%");
+
+        Div chartDiv = new Div();
+        chartDiv.getElement().appendChild(canvas);
+        chartDiv.setWidthFull();
+
+        chartDiv.addAttachListener(event -> {
+            String js = String.format(
+                    "var ctx = document.getElementById('%s').getContext('2d');"
+                    + "var existingChart = Chart.getChart(ctx.canvas);"
+                    + "if (existingChart) existingChart.destroy();"
+                    + "new Chart(ctx, {"
+                    + "  type: 'line',"
+                    + "  data: {"
+                    + "    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],"
+                    + "    datasets: [{"
+                    + "      label: 'Revenue',"
+                    + "      data: [1200,1900,1500,2100,2400,2800,3000,2700,2500,3100,2900,3500],"
+                    + "      borderColor: '#E65100',"
+                    + "      borderWidth: 2,"
+                    + "      tension: 0.4,"
+                    + "      fill: false,"
+                    + "      pointBackgroundColor: '#E65100',"
+                    + "      pointBorderColor: 'white',"
+                    + "      pointBorderWidth: 2"
+                    + "    }]"
+                    + "  },"
+                    + "  options: {"
+                    + "    responsive: true,"
+                    + "    maintainAspectRatio: false,"
+                    + "    plugins: {"
+                    + "      legend: { position: 'top' }"
+                    + "    },"
+                    + "    scales: {"
+                    + "      x: {"
+                    + "        grid: { display: false }"
+                    + "      },"
+                    + "      y: {"
+                    + "        beginAtZero: true,"
+                    + "        title: { display: true, text: 'Amount ($)' }"
+                    + "      }"
+                    + "    }"
+                    + "  }"
+                    + "});", canvasId);
+
+            UI.getCurrent().getPage().executeJs(js);
+            chartInstances.put(canvasId, null);
+        });
+
+        chartDiv.addDetachListener(event -> {
+            String cleanupJs = String.format(
+                    "var chart = Chart.getChart(document.getElementById('%s'));"
+                    + "if (chart) chart.destroy();", canvasId);
+            UI.getCurrent().getPage().executeJs(cleanupJs);
+            chartInstances.remove(canvasId);
+        });
+
+        container.add(chartDiv);
+        return container;
     }
 
     private VerticalLayout createStatCard(String value, String label, VaadinIcon icon) {

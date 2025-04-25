@@ -11,14 +11,14 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
-import com.vaadin.flow.component.charts.model.style.SolidColor;
+import com.vaadin.flow.dom.Element; // Add this line
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 
 import java.util.List;
 import java.util.Arrays;
 
+@JsModule("https://cdn.jsdelivr.net/npm/chart.js")
 @Route("Admindashboard")
 public class AdminDashboardView extends VerticalLayout {
 
@@ -205,7 +205,9 @@ public class AdminDashboardView extends VerticalLayout {
         );
 
         main.add(reportsLayout);
+//         createBoxWithGraph();
         return main;
+
     }
 
     private VerticalLayout createStatCard(String value, String label) {
@@ -236,7 +238,6 @@ public class AdminDashboardView extends VerticalLayout {
 
     private VerticalLayout createBoxWithGraph() {
         VerticalLayout box = new VerticalLayout();
-
         box.getStyle()
                 .set("background-color", "white")
                 .set("padding", "20px")
@@ -250,34 +251,36 @@ public class AdminDashboardView extends VerticalLayout {
                 .set("color", "#333333")
                 .set("font-size", "18px");
 
-        Chart chart = createDummyChart();
-        chart.setWidthFull();
+        // Create a canvas element
+        Element canvas = new Element("canvas");
+        canvas.setAttribute("id", "userActivityChart");
+        canvas.getStyle().set("width", "100%");
+        canvas.getStyle().set("height", "300px");
 
-        box.add(title, chart);
+        Div chartContainer = new Div();
+        chartContainer.getElement().appendChild(canvas); // Attach canvas to div
+        chartContainer.setWidth("100%");
+        chartContainer.getStyle().set("height", "300px");
 
+        // Initialize chart when container attaches
+        chartContainer.addAttachListener(event -> {
+            UI.getCurrent().getPage().executeJs(
+                    "var ctx = document.getElementById($0).getContext('2d');"
+                    + "new Chart(ctx, "
+                    + "{ type: 'line', data: { labels: ['May','Jun','Jul','Aug','Sep','Oct'], "
+                    + "datasets: [{ label: 'Users', data: [200,500,400,600,550,800], "
+                    + "borderColor: '#E65100', borderWidth: 2, tension: 0.4, "
+                    + "backgroundColor: 'rgba(230, 81, 0, 0.05)', fill: true, "
+                    + "pointBackgroundColor: '#E65100', pointBorderColor: 'white', pointBorderWidth: 2 }] }, "
+                    + "options: { responsive: true, maintainAspectRatio: false, "
+                    + "plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, "
+                    + "y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } } } } });",
+                    "userActivityChart" // ID matches canvas element
+            );
+        });
+
+        box.add(title, chartContainer);
         return box;
-    }
-
-    private Chart createDummyChart() {
-        Chart chart = new Chart(ChartType.LINE);
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle("");
-
-        List<String> categories = Arrays.asList("May", "Jun", "Jul", "Aug", "Sep", "Oct");
-        conf.getxAxis().setCategories(categories.toArray(new String[0]));
-
-        Number[] dataValues = {200, 500, 400, 600, 550, 800};
-        DataSeries series = new DataSeries();
-        series.setName("Users");
-        series.setData(dataValues);
-
-        PlotOptionsLine plotOptions = new PlotOptionsLine();
-        plotOptions.setAllowPointSelect(true);
-        plotOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(plotOptions);
-
-        conf.addSeries(series);
-        return chart;
     }
 
     private VerticalLayout createActivityBox() {

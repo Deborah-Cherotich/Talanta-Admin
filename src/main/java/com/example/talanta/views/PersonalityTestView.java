@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -19,9 +20,11 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.dom.Element; // Add this line
 
 import java.util.*;
 
+@JsModule("https://cdn.jsdelivr.net/npm/chart.js")
 @Route("personality-tests")
 public class PersonalityTestView extends VerticalLayout {
 
@@ -243,63 +246,123 @@ public class PersonalityTestView extends VerticalLayout {
     }
 
     private VerticalLayout createPersonalityTypeChart() {
-        Chart chart = new Chart(ChartType.PIE);
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle("Personality Type Distribution");
+        VerticalLayout chartContainer = createChartContainer();
+        H3 chartTitle = new H3("Personality Type Distribution");
+        chartTitle.getStyle().set("margin", "0 0 15px 0");
 
-        DataSeries series = new DataSeries();
-        series.add(new DataSeriesItem("Analytical", 35));
-        series.add(new DataSeriesItem("Social", 25));
-        series.add(new DataSeriesItem("Creative", 20));
-        series.add(new DataSeriesItem("Practical", 15));
-        series.add(new DataSeriesItem("Leadership", 5));
+        // Create canvas element
+        Element canvas = createCanvasElement("personalityChart");
+        Div chartDiv = new Div();
+        chartDiv.getElement().appendChild(canvas);
 
-        conf.addSeries(series);
-        chart.setWidthFull();
+        // Initialize chart
+        chartDiv.addAttachListener(event -> {
+            UI.getCurrent().getPage().executeJs(
+                    "var ctx = document.getElementById($0).getContext('2d');"
+                    + "new Chart(ctx, {"
+                    + "  type: 'pie',"
+                    + "  data: {"
+                    + "    labels: ['Analytical', 'Social', 'Creative', 'Practical', 'Leadership'],"
+                    + "    datasets: [{"
+                    + "      data: [35, 25, 20, 15, 5],"
+                    + "      backgroundColor: ["
+                    + "        'rgba(230, 81, 0, 0.8)',"
+                    + "        'rgba(255, 152, 0, 0.8)',"
+                    + "        'rgba(255, 193, 7, 0.8)',"
+                    + "        'rgba(139, 195, 74, 0.8)',"
+                    + "        'rgba(67, 160, 71, 0.8)'"
+                    + "      ],"
+                    + "      borderColor: 'white',"
+                    + "      borderWidth: 2"
+                    + "    }]"
+                    + "  },"
+                    + "  options: {"
+                    + "    responsive: true,"
+                    + "    maintainAspectRatio: false,"
+                    + "    plugins: {"
+                    + "      legend: { position: 'right' },"
+                    + "      title: { display: true, text: 'Personality Type Distribution' }"
+                    + "    }"
+                    + "  }"
+                    + "});",
+                    "personalityChart"
+            );
+        });
 
-        VerticalLayout chartContainer = new VerticalLayout();
-        chartContainer.getStyle()
-                .set("background-color", "white")
-                .set("padding", "20px")
-                .set("border-radius", "10px")
-                .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
-                .set("width", "48%");
-        chartContainer.add(chart);
-
+        chartContainer.add(chartTitle, chartDiv);
         return chartContainer;
     }
 
     private VerticalLayout createCareerMatchChart() {
-        Chart chart = new Chart(ChartType.COLUMN);
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle("Top Career Matches");
+        VerticalLayout chartContainer = createChartContainer();
+        H3 chartTitle = new H3("Top Career Matches");
+        chartTitle.getStyle().set("margin", "0 0 15px 0");
 
-        List<String> categories = Arrays.asList(
-                "Software Engineer",
-                "Teacher",
-                "Doctor",
-                "Artist",
-                "Business Manager"
-        );
-        conf.getxAxis().setCategories(categories.toArray(new String[0]));
+        // Create canvas element
+        Element canvas = createCanvasElement("careerChart");
+        Div chartDiv = new Div();
+        chartDiv.getElement().appendChild(canvas);
 
-        Number[] matches = {120, 95, 80, 65, 50};
-        DataSeries series = new DataSeries("Matches");
-        series.setData(matches);
+        // Initialize chart
+        chartDiv.addAttachListener(event -> {
+            UI.getCurrent().getPage().executeJs(
+                    "var ctx = document.getElementById($0).getContext('2d');"
+                    + "new Chart(ctx, {"
+                    + "  type: 'bar',"
+                    + "  data: {"
+                    + "    labels: ['Software Engineer', 'Teacher', 'Doctor', 'Artist', 'Business Manager'],"
+                    + "    datasets: [{"
+                    + "      label: 'Matches',"
+                    + "      data: [120, 95, 80, 65, 50],"
+                    + "      backgroundColor: 'rgba(230, 81, 0, 0.8)',"
+                    + "      borderColor: 'rgba(230, 81, 0, 1)',"
+                    + "      borderWidth: 1"
+                    + "    }]"
+                    + "  },"
+                    + "  options: {"
+                    + "    responsive: true,"
+                    + "    maintainAspectRatio: false,"
+                    + "    plugins: {"
+                    + "      legend: { display: false },"
+                    + "      title: { display: true, text: 'Top Career Matches' }"
+                    + "    },"
+                    + "    scales: {"
+                    + "      x: {"
+                    + "        grid: { display: false }"
+                    + "      },"
+                    + "      y: {"
+                    + "        beginAtZero: true,"
+                    + "        grid: { color: 'rgba(0,0,0,0.05)' }"
+                    + "      }"
+                    + "    }"
+                    + "  }"
+                    + "});",
+                    "careerChart"
+            );
+        });
 
-        conf.addSeries(series);
-        chart.setWidthFull();
+        chartContainer.add(chartTitle, chartDiv);
+        return chartContainer;
+    }
 
-        VerticalLayout chartContainer = new VerticalLayout();
-        chartContainer.getStyle()
+    private Element createCanvasElement(String id) {
+        Element canvas = new Element("canvas");
+        canvas.setAttribute("id", id);
+        canvas.getStyle()
+                .set("width", "100%")
+                .set("height", "300px");
+        return canvas;
+    }
+
+    private VerticalLayout createChartContainer() {
+        VerticalLayout container = new VerticalLayout();
+        container.getStyle()
                 .set("background-color", "white")
                 .set("padding", "20px")
                 .set("border-radius", "10px")
                 .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
                 .set("width", "48%");
-        chartContainer.add(chart);
-
-        return chartContainer;
+        return container;
     }
 
     private Grid<TestResult> createResultsGrid() {
