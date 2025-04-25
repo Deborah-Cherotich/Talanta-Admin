@@ -111,6 +111,24 @@
             <artifactId>vaadin-testbench-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-charts-flow</artifactId>
+            <version>24.7.0.alpha10</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.giraone.rules</groupId>
+            <artifactId>rules-engine</artifactId>
+            <version>1.2.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.poole</groupId>
+            <artifactId>ConditionalRestrictionParser</artifactId>
+            <version>0.3.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
