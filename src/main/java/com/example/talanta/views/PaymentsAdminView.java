@@ -2,9 +2,6 @@ package com.example.talanta.views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
-import com.vaadin.flow.component.charts.model.style.SolidColor;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -23,6 +20,8 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
+import elemental.json.Json;
+import elemental.json.JsonArray;
 
 import java.util.*;
 
@@ -30,8 +29,13 @@ import java.util.*;
 public class PaymentsAdminView extends VerticalLayout {
 
     public PaymentsAdminView() {
+        // Make the main layout scrollable
+        setHeight("100vh");
+        setPadding(false);
+        setSpacing(false);
+        
         HorizontalLayout layout = new HorizontalLayout();
-        VerticalLayout sidebar = createSidebar(); // Reusing your existing sidebar
+        VerticalLayout sidebar = createSidebar();
         VerticalLayout mainContent = createMainContent();
 
         layout.setSizeFull();
@@ -95,6 +99,8 @@ public class PaymentsAdminView extends VerticalLayout {
         VerticalLayout main = new VerticalLayout();
         main.setPadding(true);
         main.setSpacing(true);
+        main.setSizeFull();
+        main.getStyle().set("overflow-y", "auto"); // Make content scrollable
 
         // Header section
         HorizontalLayout headerLayout = new HorizontalLayout();
@@ -127,36 +133,55 @@ public class PaymentsAdminView extends VerticalLayout {
         );
         main.add(statsLayout);
 
-        // Revenue chart
-        Chart revenueChart = new Chart();
-        Configuration conf = revenueChart.getConfiguration();
-        conf.setTitle("Monthly Revenue");
-        
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        conf.addxAxis(xAxis);
-        
-        YAxis yAxis = new YAxis();
-        yAxis.setTitle("Amount ($)");
-        conf.addyAxis(yAxis);
-        
-        PlotOptionsColumn columnOptions = new PlotOptionsColumn();
-        columnOptions.setColor(new SolidColor("#E65100"));
-        conf.setPlotOptions(columnOptions);
-        
-        ListSeries series = new ListSeries("Revenue", 
-            1200, 1900, 1500, 2100, 2400, 2800, 
-            3000, 2700, 2500, 3100, 2900, 3500);
-        conf.addSeries(series);
-        
-        revenueChart.getStyle()
+        // Revenue chart - replaced Vaadin Charts with Chart.js
+        Div chartContainer = new Div();
+        chartContainer.setWidthFull();
+        chartContainer.setHeight("400px");
+        chartContainer.setId("revenueChart");
+        chartContainer.getStyle()
             .set("background-color", "white")
             .set("border-radius", "10px")
             .set("box-shadow", "0 2px 5px rgba(0,0,0,0.05)")
             .set("padding", "20px");
         
-        main.add(revenueChart);
+        // Initialize the chart using JavaScript
+        UI.getCurrent().getPage().executeJs("""
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [1200, 1900, 1500, 2100, 2400, 2800, 3000, 2700, 2500, 3100, 2900, 3500],
+                        backgroundColor: '#E65100',
+                        borderColor: '#E65100',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount ($)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Revenue'
+                        }
+                    }
+                }
+            });
+        """);
+        
+        main.add(chartContainer);
 
         // Main content tabs
         Div tabs = new Div();
@@ -229,10 +254,13 @@ public class PaymentsAdminView extends VerticalLayout {
         
         main.add(transactionsSection, subscriptionsSection, refundsSection);
         
+        // Add Chart.js library
+        UI.getCurrent().getPage().addJavaScript("https://cdn.jsdelivr.net/npm/chart.js");
+        
         return main;
     }
 
-    private VerticalLayout createStatCard(String value, String label, VaadinIcon icon) {
+       private VerticalLayout createStatCard(String value, String label, VaadinIcon icon) {
         VerticalLayout card = new VerticalLayout();
         card.setPadding(true);
         card.setSpacing(false);
@@ -797,7 +825,6 @@ public class PaymentsAdminView extends VerticalLayout {
             this.reason = reason;
         }
 
-        // Getters
         public String getId() { return id; }
         public String getTransactionId() { return transactionId; }
         public String getUserId() { return userId; }
