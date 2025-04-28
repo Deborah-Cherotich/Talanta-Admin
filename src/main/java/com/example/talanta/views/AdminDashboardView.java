@@ -58,7 +58,7 @@ public class AdminDashboardView extends VerticalLayout {
         HorizontalLayout dashboardNav = createNavItem("Dashboard", VaadinIcon.DASHBOARD, "Admindashboard");
         HorizontalLayout usersNav = createNavItem("Users", VaadinIcon.USER, "users");
         HorizontalLayout testsNav = createNavItem("Personality Tests", VaadinIcon.CLIPBOARD_TEXT, "personality-tests");
-        HorizontalLayout coursesNav = createNavItem("Courses", VaadinIcon.BOOK, "courses-careers");
+        HorizontalLayout coursesNav = createNavItem("Career", VaadinIcon.BOOK, "careers");
         HorizontalLayout FieldNav = createNavItem("Fields", VaadinIcon.BOOK, "fieldView");
         HorizontalLayout institutionsNav = createNavItem("Institutions", VaadinIcon.ACADEMY_CAP, "institutions");
         HorizontalLayout paymentsNav = createNavItem("Payments", VaadinIcon.CREDIT_CARD, "payments");
